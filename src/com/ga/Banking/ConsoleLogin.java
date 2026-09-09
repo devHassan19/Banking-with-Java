@@ -1,11 +1,13 @@
 package com.ga.Banking;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ConsoleLogin {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
+//        int wrongPsss = 3;
 
         while (running) {
             System.out.println("\n===== Bank System =====");
@@ -17,11 +19,71 @@ public class ConsoleLogin {
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
+//                case "1":
+//                    System.out.println("Login");
+//                    System.out.println("This Features under maintenance");
+//                    System.out.println("See you Soon");
+//                    running = false;
+//                    break;
                 case "1":
-                    System.out.println("Login");
-                    System.out.println("This Features under maintenance");
-                    System.out.println("See you Soon");
-                    running = false;
+                    System.out.print("Enter ID: ");
+                    String loginId = scanner.nextLine().trim();
+
+                    Optional<Customer> foundCustomer = CustomerFileManager.findCustomerById(loginId);
+//                    Optional<Banker> foundBanker = BankerFileManager.findBankerById(loginId);
+
+                    if (foundCustomer.isPresent()) {
+                        Customer loggedCustomer = foundCustomer.get();
+
+                        int attempts = 5;
+
+                        while (attempts > 0) {
+
+                            System.out.print("Enter Password: ");
+                            String inputPassword = scanner.nextLine().trim();
+
+                            if (loggedCustomer.checkPassword(inputPassword)) {
+
+                                System.out.println(
+                                        "Login successful! Welcome " + loggedCustomer.getName()
+                                );
+
+                                showCustomerMenu(loggedCustomer, scanner);
+                                break;
+
+                            } else {
+
+                                attempts--;
+
+                                System.out.println("Incorrect password!");
+
+                                if (attempts > 0) {
+                                    System.out.println(
+                                            "Try again! You have " + attempts + " attempts left."
+                                    );
+                                } else {
+                                    System.out.println("Too many incorrect attempts!");
+                                }
+                            }
+                        }
+
+
+//                    } else if (foundBanker.isPresent()) {
+//                        Banker loggedBanker = foundBanker.get();
+//
+//                        System.out.print("Enter Password: ");
+//                        String inputPassword = scanner.nextLine().trim();
+//
+//                        if (loggedBanker.checkPassword(inputPassword)) {
+//                            System.out.println("Login successful! Welcome " + loggedBanker.getName());
+//                            showBankerMenu(loggedBanker, scanner);
+//                        } else {
+//                            System.out.println("Incorrect password!");
+//                        }
+
+                    } else {
+                        System.out.println("User not found!");
+                    }
                     break;
 
 
@@ -71,5 +133,78 @@ public class ConsoleLogin {
             }
         }
         scanner.close();
+    }
+
+    private static void showCustomerMenu(Customer customer, Scanner scanner) {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n===== Customer Menu =====");
+            System.out.println("1- Withdraw");
+            System.out.println("2- Deposit");
+            System.out.println("3- Transfer");
+            System.out.println("4- View Transactions");
+            System.out.println("5- Logout");
+            System.out.print("Choose: ");
+
+            String option = scanner.nextLine().trim();
+
+            switch (option) {
+                case "1":
+                    System.out.println("Withdraw - not implemented yet");
+                    break;
+                case "2":
+                    System.out.println("Deposit - not implemented yet");
+                    break;
+                case "3":
+                    System.out.println("Transfer - not implemented yet");
+                    break;
+                case "4":
+                    System.out.println("View Transactions - not implemented yet");
+                    break;
+                case "5":
+                    System.out.println("Logged out successfully.");
+                    loggedIn = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice, try again.");
+            }
+        }
+    }
+
+    private static void showBankerMenu(Banker banker, Scanner scanner) {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n===== Banker Menu =====");
+            System.out.println("1- View Customer Accounts");
+            System.out.println("2- Freeze/Unfreeze Account");
+            System.out.println("3- Logout");
+            System.out.print("Choose: ");
+
+            String option = scanner.nextLine().trim();
+
+            switch (option) {
+                case "1":
+                    System.out.println("View Customer Accounts - not implemented yet");
+                    break;
+                case "2":
+                    System.out.println("Freeze/Unfreeze - not implemented yet");
+                    break;
+                case "3":
+                    System.out.println("Logged out successfully.");
+                    loggedIn = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice, try again.");
+            }
+        }
+    }
+
+    public static void wrongPassword(int wrongPsss) {
+
+        while (wrongPsss > 0) {
+            System.out.println("Incorrect password!");
+            wrongPsss--;
+            System.out.println("Try again! .. You have " + wrongPsss + " Temp");
+        }
     }
 }

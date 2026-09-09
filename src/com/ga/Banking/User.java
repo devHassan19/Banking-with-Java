@@ -22,4 +22,12 @@ protected  String id;
     public String getId() {
         return id;
     }
+
+    public void setEncryptedPassword(String encryptedPassword){
+        this.password = encryptedPassword;
+    }
+    public boolean checkPassword(String password){
+        String hashedInput = PasswordEncryptor.encrypt(password);
+        return this.password.equals(hashedInput);
+    }
 }
