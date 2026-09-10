@@ -39,5 +39,11 @@ public class Customer extends User {
         Customer customer = new Customer("152202020.2", "customer", "password", "cpr");
         for (Account account : customer.getAccounts()) {
             System.out.println(account.getAcountId());
-        }    }
+
+
+
+
+
+        }
+    }
 }
