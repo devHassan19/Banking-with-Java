@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -24,6 +26,11 @@ public class CustomerFileManager {
             writer.write("ID:" + customer.getId() + "\n");
             writer.write("CPR:" + customer.getCpr() + "\n");
             writer.write("Name:" + customer.getName() + "\n");
+            for (Account account : customer.getAccounts()) {
+                System.out.println(account.getAcountId());
+                writer.write("Account:" +account.getAcountId() + "\n");
+            }
+//            writer.write("Account:" + customer.getAccounts() + "\n");
             writer.write("Password:" + customer.getPassword() + "\n");
         } catch (IOException e) {
             System.out.println("Error !! : " + e.getMessage());
@@ -101,6 +108,7 @@ public class CustomerFileManager {
 
         return Optional.empty();
     }
+
     public static String generateNewId() {
         File dir = new File(DIRECTORY);
 
@@ -139,4 +147,27 @@ public class CustomerFileManager {
 
         return String.format("Cus-%03d", maxNumber + 1);
     }
+
+//    For Testing only
+public static void removeAllCustomers() {
+    File dir = new File(DIRECTORY);
+
+    File[] files = dir.listFiles((d, name) ->
+            name.startsWith("Customer-") && name.endsWith(".txt"));
+
+    if (files == null || files.length == 0) {
+        System.out.println("No Customers Found");
+        return;
+    }
+
+    for (File file : files) {
+        if (file.delete()) {
+            System.out.println("Deleted: " + file.getName());
+        } else {
+            System.out.println("Failed to delete: " + file.getName());
+        }
+    }
+
+    System.out.println("All Customers Deleted");
+}
 }
