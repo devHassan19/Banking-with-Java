@@ -1,11 +1,11 @@
 package com.ga.Banking;
 
 public abstract class User {
+protected  String id;
 protected  String name;
 protected  String password;
-protected  String id;
 
-    public User(String name, String password, String id) {
+    public User( String id , String name, String password) {
         this.name = name;
         this.password = password;
         this.id = id;

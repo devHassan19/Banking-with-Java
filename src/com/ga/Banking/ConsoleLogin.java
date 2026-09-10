@@ -7,7 +7,6 @@ public class ConsoleLogin {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-//        int wrongPsss = 3;
 
         while (running) {
             System.out.println("\n===== Bank System =====");
@@ -19,17 +18,11 @@ public class ConsoleLogin {
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
-//                case "1":
-//                    System.out.println("Login");
-//                    System.out.println("This Features under maintenance");
-//                    System.out.println("See you Soon");
-//                    running = false;
-//                    break;
                 case "1":
-                    System.out.print("Enter ID: ");
-                    String loginId = scanner.nextLine().trim();
+                    System.out.print("Enter CPR: ");
+                    String loginCpr = scanner.nextLine().trim();
 
-                    Optional<Customer> foundCustomer = CustomerFileManager.findCustomerById(loginId);
+                    Optional<Customer> foundCustomer = CustomerFileManager.findCustomerByCpr(loginCpr);
 //                    Optional<Banker> foundBanker = BankerFileManager.findBankerById(loginId);
 
                     if (foundCustomer.isPresent()) {
@@ -97,8 +90,10 @@ public class ConsoleLogin {
                     if (userType.equals("1")) {
                         System.out.println("\n===== Create New Customer =====");
 
-                        System.out.print("Enter Your ID: ");
-                        String id = scanner.nextLine().trim();
+                        System.out.print("Enter Your CPR: ");
+                        String cpr = scanner.nextLine().trim();
+
+                        //valid cpr
 
                         System.out.print("Enter Your Name:");
                         String name = scanner.nextLine().trim();
@@ -106,7 +101,9 @@ public class ConsoleLogin {
                         System.out.print("Enter Your Password: ");
                         String password = scanner.nextLine().trim();
 
-                        Customer newCustomer = new Customer(id, name, password);
+                        String id = CustomerFileManager.generateNewId();
+
+                        Customer newCustomer = new Customer(id , name , password , cpr);
                         CustomerFileManager.saveCustomer(newCustomer);
 
                         System.out.println("Created New Customer successfully : !");
