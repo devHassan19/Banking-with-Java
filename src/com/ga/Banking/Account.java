@@ -37,23 +37,67 @@ public abstract class Account {
         return transactions;
     }
 
-    public void deposit(double amount) {
+    public boolean deposit(double amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid amount.");
+            return false;
+        }
+
         this.balance += amount;
-        transactions.add(new Transactions("Deposit", amount));
+        Transactions transaction = new Transactions("Deposit", amount,this.AcountId);
+        transactions.add(transaction);
+        TransFileManager.saveTransaction(owner, transaction);
 
+        System.out.println("Deposit successful. New balance: " + this.balance);
+        return true;
     }
 
+    public boolean withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid amount.");
+            return false;
+        }
+        if (amount > this.balance) {
+            System.out.println("Insufficient balance.");
+            return false;
+        }
 
-    public void withdraw(double amount) {
         this.balance -= amount;
-        transactions.add(new Transactions("Withdraw", amount));
+        Transactions transaction = new Transactions("Withdraw", amount, this.AcountId);
+        transactions.add(transaction);
+        TransFileManager.saveTransaction(owner, transaction);
+
+        System.out.println("Withdraw successful. New balance: " + this.balance);
+        return true;
     }
 
-    public void transferFunds(double amount , Account account) {
+    public boolean transferFunds(double amount, Account account) {
+        if (account == this) {
+            System.out.println("Cannot transfer to the same account.");
+            return false;
+        }
+        if (amount <= 0) {
+            System.out.println("Invalid amount.");
+            return false;
+        }
+        if (amount > this.balance) {
+            System.out.println("Insufficient balance.");
+            return false;
+        }
+
         this.balance -= amount;
         account.deposit(amount);
-        transactions.add(new Transactions("TransferFunds", amount));
 
+        Transactions transaction = new Transactions("TransferFunds", amount, this.AcountId);
+        transactions.add(transaction);
+        TransFileManager.saveTransaction(owner, transaction);
+
+        System.out.println("Transfer successful.");
+        return true;
+    }
+
+    public void restoreBalance(double balance) {
+        this.balance = balance;
     }
 
     public void printTransactions() {
@@ -62,9 +106,9 @@ public abstract class Account {
         }
     }
     public static void main(String[] args) {
-        Customer customer1 = new Customer("152202020.2", "customer", "password", "cpr");
-        Account ss = new Saving(customer1.getId() , customer1);
-        Account ch = new Checking(customer1.getId() , customer1);
+        Customer customer7 = new Customer("123123123", "customer", "password", "cpr");
+        Account ss = new Saving(customer7.getId() , customer7);
+        Account ch = new Checking(customer7.getId() , customer7);
 
         System.out.println(ss.getBalance());
         System.out.println(ch.getBalance());

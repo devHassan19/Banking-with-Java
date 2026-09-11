@@ -1,0 +1,9 @@
+Operation:Deposit
+Amount:10.0
+Date:2026-09-11 13:45:06
+-------------------------
+Operation:Deposit
+Account:Sav-Cus-004
+Amount:10.0
+Date:2026-09-11 13:48:09
+-------------------------

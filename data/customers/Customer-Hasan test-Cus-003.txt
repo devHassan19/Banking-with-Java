@@ -1,0 +1,6 @@
+ID:Cus-003
+CPR:11
+Name:Hasan test
+Account:Sav-Cus-003:10.0
+Account:Chek-Cus-003:10.0
+Password:4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8

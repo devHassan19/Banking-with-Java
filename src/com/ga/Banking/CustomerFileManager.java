@@ -27,10 +27,8 @@ public class CustomerFileManager {
             writer.write("CPR:" + customer.getCpr() + "\n");
             writer.write("Name:" + customer.getName() + "\n");
             for (Account account : customer.getAccounts()) {
-                System.out.println(account.getAcountId());
-                writer.write("Account:" +account.getAcountId() + "\n");
+                writer.write("Account:" + account.getAcountId() + ":" + account.getBalance() + "\n");
             }
-//            writer.write("Account:" + customer.getAccounts() + "\n");
             writer.write("Password:" + customer.getPassword() + "\n");
         } catch (IOException e) {
             System.out.println("Error !! : " + e.getMessage());
@@ -75,6 +73,7 @@ public class CustomerFileManager {
                 String password = null;
                 String custId = null;
                 String custCpr = null;
+                java.util.Map<String, Double> balances = new java.util.HashMap<>();
 
                 while ((line = reader.readLine()) != null) {
                     if (line.startsWith("ID:")) {
@@ -85,17 +84,26 @@ public class CustomerFileManager {
                         password = line.substring(9).trim();
                     } else if (line.startsWith("CPR:")) {
                         custCpr = line.substring(4).trim();
+                    } else if (line.startsWith("Account:")) {
+                        String[] parts = line.substring(8).split(":");
+                        if (parts.length == 2) {
+                            balances.put(parts[0].trim(), Double.parseDouble(parts[1].trim()));
+                        }
                     }
                 }
 
                 if (custCpr != null && custCpr.equals(cpr)) {
-
                     if (custId != null && name != null && password != null) {
 
-                        Customer customer =
-                                new Customer(custId, name, "temp", custCpr);
-
+                        Customer customer = new Customer(custId, name, "temp", custCpr);
                         customer.setEncryptedPassword(password);
+
+                        for (Account acc : customer.getAccounts()) {
+                            Double bal = balances.get(acc.getAcountId());
+                            if (bal != null) {
+                                acc.restoreBalance(bal);
+                            }
+                        }
 
                         return Optional.of(customer);
                     }
@@ -148,26 +156,26 @@ public class CustomerFileManager {
         return String.format("Cus-%03d", maxNumber + 1);
     }
 
-//    For Testing only
-public static void removeAllCustomers() {
-    File dir = new File(DIRECTORY);
+    //    For Testing only
+    public static void removeAllCustomers() {
+        File dir = new File(DIRECTORY);
 
-    File[] files = dir.listFiles((d, name) ->
-            name.startsWith("Customer-") && name.endsWith(".txt"));
+        File[] files = dir.listFiles((d, name) ->
+                name.startsWith("Customer-") && name.endsWith(".txt"));
 
-    if (files == null || files.length == 0) {
-        System.out.println("No Customers Found");
-        return;
-    }
-
-    for (File file : files) {
-        if (file.delete()) {
-            System.out.println("Deleted: " + file.getName());
-        } else {
-            System.out.println("Failed to delete: " + file.getName());
+        if (files == null || files.length == 0) {
+            System.out.println("No Customers Found");
+            return;
         }
-    }
 
-    System.out.println("All Customers Deleted");
-}
+        for (File file : files) {
+            if (file.delete()) {
+                System.out.println("Deleted: " + file.getName());
+            } else {
+                System.out.println("Failed to delete: " + file.getName());
+            }
+        }
+
+        System.out.println("All Customers Deleted");
+    }
 }

@@ -93,8 +93,6 @@ public class ConsoleLogin {
                     System.out.print("Enter Your CPR: ");
                     String cpr = scanner.nextLine().trim();
 
-                    //valid cpr
-
                     System.out.print("Enter Your Name:");
                     String name = scanner.nextLine().trim();
 
@@ -107,7 +105,7 @@ public class ConsoleLogin {
                     CustomerFileManager.saveCustomer(newCustomer);
 
                     System.out.println("Created New Customer successfully : !");
-                    System.out.println("File name: " + newCustomer.getFileName() + ".txt");
+//                    System.out.println("File name: " + newCustomer.getFileName() + ".txt");
 
 //                    } else if (userType.equals("2")) {
 //                        System.out.println("Banker");
@@ -146,17 +144,57 @@ public class ConsoleLogin {
             String option = scanner.nextLine().trim();
 
             switch (option) {
-                case "1":
-                    System.out.println("Withdraw - not implemented yet");
+                case "1": {
+                    Account acc = selectAccount(customer, scanner);
+                    if (acc == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+                    System.out.print("Enter amount to withdraw: ");
+                    double amount = parseAmount(scanner.nextLine().trim());
+
+                    if (acc.withdraw(amount)) {
+                        CustomerFileManager.saveCustomer(customer);
+                    }
                     break;
-                case "2":
-                    System.out.println("Deposit - not implemented yet");
+                }
+                case "2": {
+                    Account acc = selectAccount(customer, scanner);
+                    if (acc == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+                    System.out.print("Enter amount to deposit: ");
+                    double amount = parseAmount(scanner.nextLine().trim());
+
+                    if (acc.deposit(amount)) {
+                        CustomerFileManager.saveCustomer(customer);
+                    }
                     break;
-                case "3":
-                    System.out.println("Transfer - not implemented yet");
+                }
+                case "3": {
+                    System.out.println("-- Source account --");
+                    Account from = selectAccount(customer, scanner);
+                    if (from == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+                    System.out.println("-- Destination account --");
+                    Account to = selectAccount(customer, scanner);
+                    if (to == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+                    System.out.print("Enter amount to transfer: ");
+                    double amount = parseAmount(scanner.nextLine().trim());
+
+                    if (from.transferFunds(amount, to)) {
+                        CustomerFileManager.saveCustomer(customer);
+                    }
                     break;
+                }
                 case "4":
-                    System.out.println("View Transactions - not implemented yet");
+                    TransFileManager.printCustomerTransactions(customer);
                     break;
                 case "5":
                     System.out.println("Logged out successfully.");
@@ -165,6 +203,14 @@ public class ConsoleLogin {
                 default:
                     System.out.println("Invalid choice, try again.");
             }
+        }
+    }
+
+    private static double parseAmount(String input) {
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            return -1;
         }
     }
 
@@ -196,4 +242,17 @@ public class ConsoleLogin {
         }
     }
 
+    private static Account selectAccount(Customer customer, Scanner scanner) {
+        System.out.println("Choice:");
+        System.out.println("1- Saving");
+        System.out.println("2- Checking");
+        System.out.print("Choice: ");
+        String choice = scanner.nextLine().trim();
+
+        for (Account acc : customer.getAccounts()) {
+            if (choice.equals("1") && acc instanceof Saving) return acc;
+            if (choice.equals("2") && acc instanceof Checking) return acc;
+        }
+        return null;
+    }
 }

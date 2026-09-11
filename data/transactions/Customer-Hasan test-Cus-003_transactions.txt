@@ -1,0 +1,24 @@
+Operation:Deposit
+Amount:20.0
+Date:2026-09-11 13:26:21
+-------------------------
+Operation:Deposit
+Amount:20.0
+Date:2026-09-11 13:34:23
+-------------------------
+Operation:Deposit
+Amount:10.0
+Date:2026-09-11 13:34:54
+-------------------------
+Operation:TransferFunds
+Amount:10.0
+Date:2026-09-11 13:34:54
+-------------------------
+Operation:Withdraw
+Amount:10.0
+Date:2026-09-11 13:36:35
+-------------------------
+Operation:Withdraw
+Amount:10.0
+Date:2026-09-11 13:43:44
+-------------------------

@@ -34,7 +34,11 @@ public class Customer extends User {
         return "Customer-" + getName() + "-" + getId();
     }
 
-
+    public void fetchAccounts() {
+        for (Account account : accounts) {
+            account.getAcountId();
+        }
+    }
     public static void main(String[] args) {
         Customer customer = new Customer("152202020.2", "customer", "password", "cpr");
         for (Account account : customer.getAccounts()) {
