@@ -1,8 +1,0 @@
-ID:Cus-006
-CPR:9
-CardNumber:Card Num: 3390504131397264
-CardType:Titanium
-Name:9
-Account:Sav-Cus-006:0.0
-Account:Chek-Cus-006:0.0
-Password:19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7

@@ -10,11 +10,13 @@ public class Transactions {
     private double amount;
     private LocalDateTime date;
     private String accountId;
+    private double balance;
 
-    public Transactions(String operation, double amount, String accountId) {
+    public Transactions(String operation, double amount, String accountId , double balance) {
         this.operation = operation;
         this.amount = amount;
         this.date = LocalDateTime.now();
+        this.balance = balance;
         this.accountId = accountId;
     }
 
@@ -42,6 +44,10 @@ public class Transactions {
         return date;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
@@ -55,6 +61,7 @@ public class Transactions {
                 "operation='" + operation + '\'' +
                 ", amount=" + amount +
                 ", account='" + accountId + '\'' +
+                ", balance=" + balance +
                 ", date=" + date.format(formatter) +
                 '}';
     }

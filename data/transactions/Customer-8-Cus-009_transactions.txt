@@ -1,0 +1,22 @@
+Operation:Deposit
+Account:Chek-Cus-009
+Amount:20.0
+Date:2026-09-13 14:30:33
+-------------------------
+Operation:Deposit
+Account:Chek-Cus-009
+Amount:50.0
+Date:2026-09-13 14:30:57
+-------------------------
+Operation:Deposit
+Amount:150.0
+Account:Chek-Cus-009
+Balance:150.0
+Date:2026-09-13 14:35:58
+-------------------------
+Operation:Deposit
+Amount:20.0
+Account:Chek-Cus-009
+Balance:170.0
+Date:2026-09-13 14:40:04
+-------------------------

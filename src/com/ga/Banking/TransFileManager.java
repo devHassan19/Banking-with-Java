@@ -23,8 +23,9 @@ public class TransFileManager {
         try (FileWriter writer = new FileWriter(fileName, true)) {
 
             writer.write("Operation:" + transaction.getOperation() + "\n");
-            writer.write("Account:" + transaction.getAccountId() + "\n"); // جديد
             writer.write("Amount:" + transaction.getAmount() + "\n");
+            writer.write("Account:" + transaction.getAccountId() + "\n"); // جديد
+            writer.write("Balance:" + transaction.getBalance() + "\n");
             writer.write("Date:" + transaction.getDate().format(
                     java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             ) + "\n");
@@ -41,7 +42,7 @@ public class TransFileManager {
         File file = new File(fileName);
 
         if (!file.exists()) {
-            System.out.println("No Customers Found .");
+            System.out.println("No Transactions Found .");
             return;
         }
 

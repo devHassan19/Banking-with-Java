@@ -1,0 +1,10 @@
+ID:Cus-007
+CPR:15
+Name:15
+SavingCardNumber:Card Num: 1814141313201481
+SavingCardType:Mastercard
+CheckingCardNumber:Card Num: 3211075617155094
+CheckingCardType:Mastercard
+Account:Sav-Cus-007:0.0
+Account:Chek-Cus-007:0.0
+Password:e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb

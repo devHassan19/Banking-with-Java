@@ -1,0 +1,10 @@
+ID:Cus-006
+CPR:12
+Name:12
+SavingCardNumber:Card Num: 5167086888878688
+SavingCardType:Mastercard
+CheckingCardNumber:Card Num: 6354150452734866
+CheckingCardType:Titanium
+Account:Sav-Cus-006:0.0
+Account:Chek-Cus-006:0.0
+Password:6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918

@@ -99,25 +99,50 @@ public class ConsoleLogin {
                     System.out.print("Enter Your Password: ");
                     String password = scanner.nextLine().trim();
 
+                    System.out.println("\n===== Saveing Type Of Card =====");
+                    System.out.println("1- Platinum");
+                    System.out.println("2- Titanium");
+                    System.out.println("3- Mastercard");
+                    System.out.print("Choice: ");
+
+                    String saveChoice = scanner.nextLine().trim();
+
+                    CardType saveCardType = CardType.Mastercard;
+
+                    switch (saveChoice) {
+                        case "1":
+                            saveCardType = CardType.Platinum;
+                            break;
+                        case "2":
+                            saveCardType = CardType.Titanium;
+                            break;
+                        case "3":
+                            saveCardType = CardType.Mastercard;
+                            break;
+                        default:
+                            System.out.println("Wrong choice! ,, Default Choice MasterCard");
+                    }
+
+
                     System.out.println("\n===== Choice Type Of Card =====");
                     System.out.println("1- Platinum");
                     System.out.println("2- Titanium");
                     System.out.println("3- Mastercard");
                     System.out.print("Choice: ");
 
-                    String choiceCard = scanner.nextLine().trim();
+                    String chekChoice = scanner.nextLine().trim();
 
-                    CardType cardType = CardType.Mastercard;
+                    CardType chekCardType = CardType.Mastercard;
 
-                    switch (choiceCard) {
+                    switch (chekChoice) {
                         case "1":
-                            cardType = CardType.Platinum;
+                            chekCardType = CardType.Platinum;
                             break;
                         case "2":
-                            cardType = CardType.Titanium;
+                            chekCardType = CardType.Titanium;
                             break;
                         case "3":
-                            cardType = CardType.Mastercard;
+                            chekCardType = CardType.Mastercard;
                             break;
                         default:
                             System.out.println("Wrong choice! ,, Default Choice MasterCard");
@@ -125,9 +150,8 @@ public class ConsoleLogin {
 
 
                     String id = CustomerFileManager.generateNewId();
-                    Long cardNum = CustomerFileManager.genCardNum();
-                    Card card = new Card("Card Num: "+cardNum , cardType);
-                    Customer newCustomer = new Customer(id, name, password, cpr, card);
+
+                    Customer newCustomer = new Customer(id, name, password, cpr, saveCardType, chekCardType);
                     CustomerFileManager.saveCustomer(newCustomer);
 
                     System.out.println("Created New Customer successfully : !");
@@ -161,10 +185,13 @@ public class ConsoleLogin {
         while (loggedIn) {
             System.out.println("\n===== Customer Menu =====");
             System.out.println("1- Withdraw");
-            System.out.println("2- Deposit");
-            System.out.println("3- Transfer");
-            System.out.println("4- View Transactions");
-            System.out.println("5- Logout");
+            System.out.println("2- Deposit To Own Accounts");
+            System.out.println("3- Transfer To Own Accounts");
+            System.out.println("4- Deposit To Another Account");
+            System.out.println("5- Transfer  To Another Account");
+            System.out.println("6- Display My ");
+            System.out.println("7- Account Statment");
+            System.out.println("8- Logout");
             System.out.print("Choose: ");
 
             String option = scanner.nextLine().trim();
@@ -220,9 +247,18 @@ public class ConsoleLogin {
                     break;
                 }
                 case "4":
-                    TransFileManager.printCustomerTransactions(customer);
+                    System.out.println("This Features under maintenance");
                     break;
                 case "5":
+                    System.out.println("This Features under maintenance");
+                    break;
+                case "6":
+                    System.out.println("This Features under maintenance");
+                    break;
+                case "7":
+                    TransFileManager.printCustomerTransactions(customer);
+                    break;
+                case "8":
                     System.out.println("Logged out successfully.");
                     loggedIn = false;
                     break;

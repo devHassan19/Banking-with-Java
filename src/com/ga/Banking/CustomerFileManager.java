@@ -23,15 +23,34 @@ public class CustomerFileManager {
         String fileName = DIRECTORY + customer.getFileName() + ".txt";
 
         try (FileWriter writer = new FileWriter(fileName)) {
+
             writer.write("ID:" + customer.getId() + "\n");
             writer.write("CPR:" + customer.getCpr() + "\n");
-            writer.write("CardNumber:" + customer.getCard().getCardNumber() + "\n");
-            writer.write("CardType:" + customer.getCard().getCardType() + "\n");
             writer.write("Name:" + customer.getName() + "\n");
+
+            // Saving Account Card
+            Account savingAccount = customer.getAccounts().get(0);
+            writer.write("SavingCardNumber:" +
+                    savingAccount.getCard().getCardNumber() + "\n");
+            writer.write("SavingCardType:" +
+                    savingAccount.getCard().getCardType().name() + "\n");
+
+
+            // Checking Account Card
+            Account checkingAccount = customer.getAccounts().get(1);
+            writer.write("CheckingCardNumber:" +
+                    checkingAccount.getCard().getCardNumber() + "\n");
+            writer.write("CheckingCardType:" +
+                    checkingAccount.getCard().getCardType().name() + "\n");
+
             for (Account account : customer.getAccounts()) {
-                writer.write("Account:" + account.getAcountId() + ":" + account.getBalance() + "\n");
+                writer.write("Account:" +
+                        account.getAcountId() + ":" +
+                        account.getBalance() + "\n");
             }
+
             writer.write("Password:" + customer.getPassword() + "\n");
+
         } catch (IOException e) {
             System.out.println("Error !! : " + e.getMessage());
         }
@@ -60,7 +79,9 @@ public class CustomerFileManager {
         }
     }
 
+
     public static Optional<Customer> findCustomerByCpr(String cpr) {
+
         File dir = new File(DIRECTORY);
 
         File[] files = dir.listFiles((d, name) ->
@@ -71,7 +92,9 @@ public class CustomerFileManager {
         }
 
         for (File file : files) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+
+            try (BufferedReader reader =
+                         new BufferedReader(new FileReader(file))) {
 
                 String line;
 
@@ -80,45 +103,65 @@ public class CustomerFileManager {
                 String custId = null;
                 String custCpr = null;
 
-                String cardNumber = null;
-                CardType cardType = null;
+                String savingCardNumber = null;
+                String checkingCardNumber = null;
+
+                CardType saveCard = null;
+                CardType chekCard = null;
 
                 java.util.Map<String, Double> balances =
                         new java.util.HashMap<>();
+
 
                 while ((line = reader.readLine()) != null) {
 
                     if (line.startsWith("ID:")) {
 
-                        custId = line.substring(3).trim();
+                        custId = line.substring("ID:".length()).trim();
 
                     } else if (line.startsWith("Name:")) {
 
-                        name = line.substring(5).trim();
+                        name = line.substring("Name:".length()).trim();
 
                     } else if (line.startsWith("Password:")) {
 
-                        password = line.substring(9).trim();
+                        password = line.substring("Password:".length()).trim();
 
                     } else if (line.startsWith("CPR:")) {
 
-                        custCpr = line.substring(4).trim();
+                        custCpr = line.substring("CPR:".length()).trim();
 
-                    } else if (line.startsWith("CardNumber:")) {
+                    } else if (line.startsWith("SavingCardNumber:")) {
 
-                        cardNumber = line.substring(11).trim();
+                        savingCardNumber =
+                                line.substring("SavingCardNumber:".length()).trim();
 
-                    } else if (line.startsWith("CardType:")) {
+                    } else if (line.startsWith("SavingCardType:")) {
 
-                        cardType = CardType.valueOf(
-                                line.substring(9).trim()
-                        );
+                        String cardType =
+                                line.substring("SavingCardType:".length()).trim();
+
+                        saveCard = CardType.valueOf(cardType);
+
+                    } else if (line.startsWith("CheckingCardNumber:")) {
+
+                        checkingCardNumber =
+                                line.substring("CheckingCardNumber:".length()).trim();
+
+                    } else if (line.startsWith("CheckingCardType:")) {
+
+                        String cardType =
+                                line.substring("CheckingCardType:".length()).trim();
+
+                        chekCard = CardType.valueOf(cardType);
 
                     } else if (line.startsWith("Account:")) {
 
-                        String[] parts = line.substring(8).split(":");
+                        String[] parts =
+                                line.substring("Account:".length()).split(":");
 
                         if (parts.length == 2) {
+
                             balances.put(
                                     parts[0].trim(),
                                     Double.parseDouble(parts[1].trim())
@@ -127,39 +170,45 @@ public class CustomerFileManager {
                     }
                 }
 
+
                 // Check CPR
                 if (custCpr != null && custCpr.equals(cpr)) {
 
                     if (custId != null &&
                             name != null &&
                             password != null &&
-                            cardNumber != null &&
-                            cardType != null) {
+                            savingCardNumber != null &&
+                            checkingCardNumber != null &&
+                            saveCard != null &&
+                            chekCard != null) {
 
-                        // Create the same card saved in the file
-                        Card card = new Card(cardNumber, cardType);
 
-                        // Create customer
+                        // Create Customer
                         Customer customer = new Customer(
                                 custId,
                                 name,
                                 "temp",
                                 custCpr,
-                                card
+                                saveCard,
+                                chekCard
                         );
+
 
                         // Restore encrypted password
                         customer.setEncryptedPassword(password);
 
+
                         // Restore account balances
                         for (Account acc : customer.getAccounts()) {
 
-                            Double bal = balances.get(acc.getAcountId());
+                            Double bal =
+                                    balances.get(acc.getAcountId());
 
                             if (bal != null) {
                                 acc.restoreBalance(bal);
                             }
                         }
+
 
                         return Optional.of(customer);
                     }
@@ -181,6 +230,7 @@ public class CustomerFileManager {
 
         return Optional.empty();
     }
+
 
     public static String generateNewId() {
         File dir = new File(DIRECTORY);

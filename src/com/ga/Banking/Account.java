@@ -55,7 +55,7 @@ public abstract class Account {
         } else {
 
             this.balance += amount;
-            Transactions transaction = new Transactions("Deposit", amount, this.AcountId);
+            Transactions transaction = new Transactions("Deposit", amount, this.AcountId,balance);
             transactions.add(transaction);
             TransFileManager.saveTransaction(owner, transaction);
 
@@ -75,7 +75,7 @@ public abstract class Account {
         }
 
         this.balance -= amount;
-        Transactions transaction = new Transactions("Withdraw", amount, this.AcountId);
+        Transactions transaction = new Transactions("Withdraw", amount, this.AcountId,balance);
         transactions.add(transaction);
         TransFileManager.saveTransaction(owner, transaction);
 
@@ -100,7 +100,7 @@ public abstract class Account {
         this.balance -= amount;
         account.deposit(amount);
 
-        Transactions transaction = new Transactions("TransferFunds", amount, this.AcountId);
+        Transactions transaction = new Transactions("TransferFunds", amount, this.AcountId,balance);
         transactions.add(transaction);
         TransFileManager.saveTransaction(owner, transaction);
 

@@ -1,8 +1,0 @@
-ID:Cus-005
-CPR:5
-CardNumber:Card_Num-6247375752944193
-CardType:Platinum
-Name:5
-Account:Sav-Cus-005:110001.0
-Account:Chek-Cus-005:0.0
-Password:ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d
