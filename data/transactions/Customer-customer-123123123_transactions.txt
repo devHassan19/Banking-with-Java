@@ -10,3 +10,18 @@ Operation:TransferFunds
 Amount:5.0
 Date:2026-09-11 12:59:30
 -------------------------
+Operation:Deposit
+Account:123123123
+Amount:10.0
+Date:2026-09-12 20:28:48
+-------------------------
+Operation:Deposit
+Account:123123123
+Amount:5.0
+Date:2026-09-12 20:28:48
+-------------------------
+Operation:TransferFunds
+Account:123123123
+Amount:5.0
+Date:2026-09-12 20:28:48
+-------------------------

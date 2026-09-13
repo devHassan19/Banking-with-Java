@@ -6,12 +6,14 @@ public abstract class Account {
     protected String AcountId;
     protected double balance;
     protected Customer owner;
+    private Card card;
     private ArrayList<Transactions> transactions;
 
-    public Account(String acountId, Customer owner) {
+    public Account(String acountId, Customer owner, Card card) {
         AcountId = acountId;
         this.balance = 0;
         this.owner = owner;
+        this.card = card;
         this.transactions = new ArrayList<>();
     }
 
@@ -23,6 +25,10 @@ public abstract class Account {
 
     public String getAcountId() {
         return AcountId;
+    }
+
+    public Card getCard() {
+        return card;
     }
 
     public double getBalance() {
@@ -43,13 +49,19 @@ public abstract class Account {
             return false;
         }
 
-        this.balance += amount;
-        Transactions transaction = new Transactions("Deposit", amount,this.AcountId);
-        transactions.add(transaction);
-        TransFileManager.saveTransaction(owner, transaction);
+        if (amount > card.getDeposit_Limit()) {
+            System.out.println("You can't deposit more than " + card.getDeposit_Limit());
+            return false;
+        } else {
 
-        System.out.println("Deposit successful. New balance: " + this.balance);
-        return true;
+            this.balance += amount;
+            Transactions transaction = new Transactions("Deposit", amount, this.AcountId);
+            transactions.add(transaction);
+            TransFileManager.saveTransaction(owner, transaction);
+
+            System.out.println("Deposit successful. New balance: " + this.balance);
+            return true;
+        }
     }
 
     public boolean withdraw(double amount) {
@@ -105,23 +117,24 @@ public abstract class Account {
             System.out.println(transaction);
         }
     }
-    public static void main(String[] args) {
-        Customer customer7 = new Customer("123123123", "customer", "password", "cpr");
-        Account ss = new Saving(customer7.getId() , customer7);
-        Account ch = new Checking(customer7.getId() , customer7);
 
-        System.out.println(ss.getBalance());
-        System.out.println(ch.getBalance());
-        ss.deposit(10);
-        System.out.println(ss.getBalance());
-        ss.transferFunds(5,ch);
-        System.out.println(ss.getBalance());
-        System.out.println(ch.getBalance());
-
-        ss.printTransactions();
-        System.out.println("****************");
-        ch.printTransactions();
-
-    }
+//    public static void main(String[] args) {
+//        Customer customer7 = new Customer("123123123", "customer", "password", "cpr");
+//        Account ss = new Saving(customer7.getId(), customer7);
+//        Account ch = new Checking(customer7.getId(), customer7);
+//
+//        System.out.println(ss.getBalance());
+//        System.out.println(ch.getBalance());
+//        ss.deposit(10);
+//        System.out.println(ss.getBalance());
+//        ss.transferFunds(5, ch);
+//        System.out.println(ss.getBalance());
+//        System.out.println(ch.getBalance());
+//
+//        ss.printTransactions();
+//        System.out.println("****************");
+//        ch.printTransactions();
+//
+//    }
 
 }

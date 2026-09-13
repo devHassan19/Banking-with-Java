@@ -25,6 +25,8 @@ public class CustomerFileManager {
         try (FileWriter writer = new FileWriter(fileName)) {
             writer.write("ID:" + customer.getId() + "\n");
             writer.write("CPR:" + customer.getCpr() + "\n");
+            writer.write("CardNumber:" + customer.getCard().getCardNumber() + "\n");
+            writer.write("CardType:" + customer.getCard().getCardType() + "\n");
             writer.write("Name:" + customer.getName() + "\n");
             for (Account account : customer.getAccounts()) {
                 writer.write("Account:" + account.getAcountId() + ":" + account.getBalance() + "\n");
@@ -60,46 +62,100 @@ public class CustomerFileManager {
 
     public static Optional<Customer> findCustomerByCpr(String cpr) {
         File dir = new File(DIRECTORY);
+
         File[] files = dir.listFiles((d, name) ->
                 name.startsWith("Customer-") && name.endsWith(".txt"));
 
-        if (files == null) return Optional.empty();
+        if (files == null) {
+            return Optional.empty();
+        }
 
         for (File file : files) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 
                 String line;
+
                 String name = null;
                 String password = null;
                 String custId = null;
                 String custCpr = null;
-                java.util.Map<String, Double> balances = new java.util.HashMap<>();
+
+                String cardNumber = null;
+                CardType cardType = null;
+
+                java.util.Map<String, Double> balances =
+                        new java.util.HashMap<>();
 
                 while ((line = reader.readLine()) != null) {
+
                     if (line.startsWith("ID:")) {
+
                         custId = line.substring(3).trim();
+
                     } else if (line.startsWith("Name:")) {
+
                         name = line.substring(5).trim();
+
                     } else if (line.startsWith("Password:")) {
+
                         password = line.substring(9).trim();
+
                     } else if (line.startsWith("CPR:")) {
+
                         custCpr = line.substring(4).trim();
+
+                    } else if (line.startsWith("CardNumber:")) {
+
+                        cardNumber = line.substring(11).trim();
+
+                    } else if (line.startsWith("CardType:")) {
+
+                        cardType = CardType.valueOf(
+                                line.substring(9).trim()
+                        );
+
                     } else if (line.startsWith("Account:")) {
+
                         String[] parts = line.substring(8).split(":");
+
                         if (parts.length == 2) {
-                            balances.put(parts[0].trim(), Double.parseDouble(parts[1].trim()));
+                            balances.put(
+                                    parts[0].trim(),
+                                    Double.parseDouble(parts[1].trim())
+                            );
                         }
                     }
                 }
 
+                // Check CPR
                 if (custCpr != null && custCpr.equals(cpr)) {
-                    if (custId != null && name != null && password != null) {
 
-                        Customer customer = new Customer(custId, name, "temp", custCpr);
+                    if (custId != null &&
+                            name != null &&
+                            password != null &&
+                            cardNumber != null &&
+                            cardType != null) {
+
+                        // Create the same card saved in the file
+                        Card card = new Card(cardNumber, cardType);
+
+                        // Create customer
+                        Customer customer = new Customer(
+                                custId,
+                                name,
+                                "temp",
+                                custCpr,
+                                card
+                        );
+
+                        // Restore encrypted password
                         customer.setEncryptedPassword(password);
 
+                        // Restore account balances
                         for (Account acc : customer.getAccounts()) {
+
                             Double bal = balances.get(acc.getAcountId());
+
                             if (bal != null) {
                                 acc.restoreBalance(bal);
                             }
@@ -110,7 +166,16 @@ public class CustomerFileManager {
                 }
 
             } catch (IOException e) {
-                System.out.println("Error reading file: " + e.getMessage());
+
+                System.out.println(
+                        "Error reading file: " + e.getMessage()
+                );
+
+            } catch (IllegalArgumentException e) {
+
+                System.out.println(
+                        "Invalid CardType in file: " + file.getName()
+                );
             }
         }
 
@@ -148,12 +213,16 @@ public class CustomerFileManager {
                     scanner.close();
 
                 } catch (Exception e) {
-                    // تجاهل الملفات التي فيها ID غير صحيح
+
                 }
             }
         }
 
         return String.format("Cus-%03d", maxNumber + 1);
+    }
+
+    public static long genCardNum() {
+        return 1000000000000000L + (long) (Math.random() * 9000000000000000L);
     }
 
     //    For Testing only
@@ -178,4 +247,11 @@ public class CustomerFileManager {
 
         System.out.println("All Customers Deleted");
     }
+
+
+//    public static void main(String[] args) {
+//        Long x;
+//        x = genCardNum();
+//        System.out.println(x);
+//    }
 }

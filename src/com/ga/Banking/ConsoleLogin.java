@@ -28,7 +28,7 @@ public class ConsoleLogin {
                     if (foundCustomer.isPresent()) {
                         Customer loggedCustomer = foundCustomer.get();
 
-                        int attempts = 5;
+                        int attempts = 3;
 
                         while (attempts > 0) {
 
@@ -99,9 +99,35 @@ public class ConsoleLogin {
                     System.out.print("Enter Your Password: ");
                     String password = scanner.nextLine().trim();
 
-                    String id = CustomerFileManager.generateNewId();
+                    System.out.println("\n===== Choice Type Of Card =====");
+                    System.out.println("1- Platinum");
+                    System.out.println("2- Titanium");
+                    System.out.println("3- Mastercard");
+                    System.out.print("Choice: ");
 
-                    Customer newCustomer = new Customer(id, name, password, cpr);
+                    String choiceCard = scanner.nextLine().trim();
+
+                    CardType cardType = CardType.Mastercard;
+
+                    switch (choiceCard) {
+                        case "1":
+                            cardType = CardType.Platinum;
+                            break;
+                        case "2":
+                            cardType = CardType.Titanium;
+                            break;
+                        case "3":
+                            cardType = CardType.Mastercard;
+                            break;
+                        default:
+                            System.out.println("Wrong choice! ,, Default Choice MasterCard");
+                    }
+
+
+                    String id = CustomerFileManager.generateNewId();
+                    Long cardNum = CustomerFileManager.genCardNum();
+                    Card card = new Card("Card Num: "+cardNum , cardType);
+                    Customer newCustomer = new Customer(id, name, password, cpr, card);
                     CustomerFileManager.saveCustomer(newCustomer);
 
                     System.out.println("Created New Customer successfully : !");
