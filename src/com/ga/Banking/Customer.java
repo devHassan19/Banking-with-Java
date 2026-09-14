@@ -51,9 +51,6 @@ public class Customer extends User {
         return "Customer-" + getName() + "-" + getId();
     }
 
-//    public Card getCard() {
-//        return card;
-//    }
 
 
     public void fetchAccounts() {

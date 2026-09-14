@@ -1,0 +1,10 @@
+ID:Cus-014
+CPR:987020306
+Name:Ahmed ali khan
+SavingCardNumber:Card Num: 1107053355395711
+SavingCardType:Titanium
+CheckingCardNumber:Card Num: 6380844868655374
+CheckingCardType:Titanium
+Account:Sav-Cus-014:20000.0
+Account:Chek-Cus-014:0.0
+Password:a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3

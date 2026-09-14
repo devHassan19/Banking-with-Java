@@ -1,5 +1,6 @@
 package com.ga.Banking;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -247,7 +248,31 @@ public class ConsoleLogin {
                     break;
                 }
                 case "4":
-                    System.out.println("This Features under maintenance");
+                    Customer otherCustomer = selectOtherCustomer(customer, scanner);
+
+                    if (otherCustomer == null) {
+                        System.out.println("Invalid customer selection.");
+                        break;
+                    }
+
+                    Account destination = selectAccount(otherCustomer, scanner);
+
+                    if (destination == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+
+                    System.out.print("Enter amount to deposit: ");
+                    double amount = parseAmount(scanner.nextLine().trim());
+
+                    if (amount <= 0) {
+                        System.out.println("Invalid amount.");
+                        break;
+                    }
+                    if (destination.depositToAnother(amount)) {
+                        CustomerFileManager.saveCustomer(otherCustomer);
+                    }
+
                     break;
                 case "5":
                     System.out.println("This Features under maintenance");
@@ -317,4 +342,63 @@ public class ConsoleLogin {
         }
         return null;
     }
+
+    private static Customer selectOtherCustomer(
+            Customer currentCustomer,
+            Scanner scanner) {
+
+        ArrayList<Customer> customers =
+                CustomerFileManager.getAllCustomers();
+
+        ArrayList<Customer> otherCustomers =
+                new ArrayList<>();
+
+        for (Customer customer : customers) {
+
+            if (!customer.getId().equals(currentCustomer.getId())) {
+                otherCustomers.add(customer);
+            }
+        }
+
+        if (otherCustomers.isEmpty()) {
+            System.out.println("No other customers found.");
+            return null;
+        }
+
+        System.out.println("\n===== Choose Customer =====");
+
+        for (int i = 0; i < otherCustomers.size(); i++) {
+
+            Customer customer = otherCustomers.get(i);
+
+            System.out.println(
+                    (i + 1) + "- " +
+                            " Name: " + customer.getName() + " "+
+                            "CPR:" + customer.getCpr() +
+                            " ID:" + customer.getId()
+            );
+        }
+
+        System.out.print("Choice: ");
+
+        try {
+
+            int choice =
+                    Integer.parseInt(scanner.nextLine().trim());
+
+            if (choice < 1 || choice > otherCustomers.size()) {
+                System.out.println("Invalid customer selection.");
+                return null;
+            }
+
+            return otherCustomers.get(choice - 1);
+
+        } catch (NumberFormatException e) {
+
+            System.out.println("Invalid choice.");
+            return null;
+        }
+    }
+
+
 }

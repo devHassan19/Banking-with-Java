@@ -296,6 +296,127 @@ public class CustomerFileManager {
         System.out.println("All Customers Deleted");
     }
 
+    public static ArrayList<Customer> getAllCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
+
+        File dir = new File(DIRECTORY);
+
+        File[] files = dir.listFiles((d, name) ->
+                name.startsWith("Customer-") && name.endsWith(".txt"));
+
+        if (files == null) {
+            return customers;
+        }
+
+        for (File file : files) {
+
+            try (BufferedReader reader =
+                         new BufferedReader(new FileReader(file))) {
+
+                String line;
+
+                String name = null;
+                String password = null;
+                String custId = null;
+                String custCpr = null;
+
+                String savingCardNumber = null;
+                String checkingCardNumber = null;
+
+                CardType saveCard = null;
+                CardType chekCard = null;
+
+                java.util.Map<String, Double> balances =
+                        new java.util.HashMap<>();
+
+                while ((line = reader.readLine()) != null) {
+
+                    if (line.startsWith("ID:")) {
+                        custId = line.substring("ID:".length()).trim();
+
+                    } else if (line.startsWith("Name:")) {
+                        name = line.substring("Name:".length()).trim();
+
+                    } else if (line.startsWith("Password:")) {
+                        password = line.substring("Password:".length()).trim();
+
+                    } else if (line.startsWith("CPR:")) {
+                        custCpr = line.substring("CPR:".length()).trim();
+
+                    } else if (line.startsWith("SavingCardNumber:")) {
+                        savingCardNumber =
+                                line.substring("SavingCardNumber:".length()).trim();
+
+                    } else if (line.startsWith("SavingCardType:")) {
+                        saveCard = CardType.valueOf(
+                                line.substring("SavingCardType:".length()).trim()
+                        );
+
+                    } else if (line.startsWith("CheckingCardNumber:")) {
+                        checkingCardNumber =
+                                line.substring("CheckingCardNumber:".length()).trim();
+
+                    } else if (line.startsWith("CheckingCardType:")) {
+                        chekCard = CardType.valueOf(
+                                line.substring("CheckingCardType:".length()).trim()
+                        );
+
+                    } else if (line.startsWith("Account:")) {
+
+                        String[] parts =
+                                line.substring("Account:".length()).split(":");
+
+                        if (parts.length == 2) {
+                            balances.put(
+                                    parts[0].trim(),
+                                    Double.parseDouble(parts[1].trim())
+                            );
+                        }
+                    }
+                }
+
+                if (custId != null &&
+                        name != null &&
+                        password != null &&
+                        custCpr != null &&
+                        savingCardNumber != null &&
+                        checkingCardNumber != null &&
+                        saveCard != null &&
+                        chekCard != null) {
+
+                    Customer customer = new Customer(
+                            custId,
+                            name,
+                            "temp",
+                            custCpr,
+                            saveCard,
+                            chekCard
+                    );
+
+                    customer.setEncryptedPassword(password);
+
+                    for (Account acc : customer.getAccounts()) {
+
+                        Double balance =
+                                balances.get(acc.getAcountId());
+
+                        if (balance != null) {
+                            acc.restoreBalance(balance);
+                        }
+                    }
+
+                    customers.add(customer);
+                }
+
+            } catch (IOException | IllegalArgumentException e) {
+                System.out.println(
+                        "Error reading customer: " + file.getName()
+                );
+            }
+        }
+
+        return customers;
+    }
 
 //    public static void main(String[] args) {
 //        Long x;

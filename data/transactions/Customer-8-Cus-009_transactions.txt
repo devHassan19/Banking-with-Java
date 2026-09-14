@@ -80,3 +80,9 @@ Account:Sav-Cus-009
 Balance:204.0
 Date:2026-09-14 09:32:40
 -------------------------
+Operation:DepositToAnother
+Amount:1000.0
+Account:Chek-Cus-009
+Balance:1190.0
+Date:2026-09-14 12:55:45
+-------------------------

@@ -1,0 +1,10 @@
+ID:Cus-013
+CPR:930703049
+Name:Hasan ali salman
+SavingCardNumber:Card Num: 9617312862058173
+SavingCardType:Platinum
+CheckingCardNumber:Card Num: 3752314482087129
+CheckingCardType:Platinum
+Account:Sav-Cus-013:0.0
+Account:Chek-Cus-013:0.0
+Password:a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3

@@ -45,6 +45,37 @@ public abstract class Account {
         return transactions;
     }
 
+    public boolean withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid amount.");
+            return false;
+        }
+        if (amount > this.balance) {
+            System.out.println("Insufficient balance.");
+            return false;
+        }
+        double dailyLimit = 0;
+        for (Transactions transaction : transactions) {
+            if (transaction.getOperation().equals("Withdraw") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
+                dailyLimit += transaction.getAmount();
+            }
+        }
+        if (dailyLimit + amount > card.getWithdraw_Limit()) {
+            System.out.println("Your Daily Limit Reached");
+            System.out.println("You can't Withdraw more than " + card.getWithdraw_Limit() + " Per Day");
+            System.out.println("Your Available Balance Is " + (card.getWithdraw_Limit() - dailyLimit));
+            return false;
+        } else {
+            this.balance -= amount;
+            Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
+            transactions.add(transaction);
+            TransFileManager.saveTransaction(owner, transaction);
+
+            System.out.println("Withdraw successful. New balance: " + this.balance);
+            return true;
+        }
+    }
+
     public boolean deposit(double amount) {
         if (amount <= 0) {
             System.out.println("Invalid amount.");
@@ -73,33 +104,30 @@ public abstract class Account {
         }
     }
 
-    public boolean withdraw(double amount) {
+    public boolean depositToAnother(double amount) {
         if (amount <= 0) {
             System.out.println("Invalid amount.");
             return false;
         }
-        if (amount > this.balance) {
-            System.out.println("Insufficient balance.");
-            return false;
-        }
         double dailyLimit = 0;
         for (Transactions transaction : transactions) {
-            if (transaction.getOperation().equals("Withdraw") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
+            if (transaction.getOperation().equals("DepositToAnother") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
                 dailyLimit += transaction.getAmount();
             }
         }
-        if (dailyLimit + amount > card.getWithdraw_Limit()) {
+        if (dailyLimit + amount > card.getDeposit_Limit()) {
             System.out.println("Your Daily Limit Reached");
-            System.out.println("You can't Withdraw more than " + card.getWithdraw_Limit() + " Per Day");
-            System.out.println("Your Available Balance Is " + (card.getWithdraw_Limit() - dailyLimit));
+            System.out.println("You can't deposit more than " + card.getDeposit_Limit() + " Per Day");
+            System.out.println("Your Available Balance Is " + (card.getDeposit_Limit() - dailyLimit));
             return false;
         } else {
-            this.balance -= amount;
-            Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
+
+            this.balance += amount;
+            Transactions transaction = new Transactions("DepositToAnother", amount, this.AcountId, balance);
             transactions.add(transaction);
             TransFileManager.saveTransaction(owner, transaction);
 
-            System.out.println("Withdraw successful. New balance: " + this.balance);
+            System.out.println("Deposit successful. New balance: " + this.balance);
             return true;
         }
     }
