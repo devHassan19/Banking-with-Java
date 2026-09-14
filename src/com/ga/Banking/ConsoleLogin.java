@@ -124,7 +124,7 @@ public class ConsoleLogin {
                     }
 
 
-                    System.out.println("\n===== Choice Type Of Card =====");
+                    System.out.println("\n===== Checking Type Of Card =====");
                     System.out.println("1- Platinum");
                     System.out.println("2- Titanium");
                     System.out.println("3- Mastercard");
@@ -189,7 +189,7 @@ public class ConsoleLogin {
             System.out.println("3- Transfer To Own Accounts");
             System.out.println("4- Deposit To Another Account");
             System.out.println("5- Transfer  To Another Account");
-            System.out.println("6- Display My ");
+            System.out.println("6- Display My Balance");
             System.out.println("7- Account Statment");
             System.out.println("8- Logout");
             System.out.print("Choose: ");
@@ -253,7 +253,7 @@ public class ConsoleLogin {
                     System.out.println("This Features under maintenance");
                     break;
                 case "6":
-                    System.out.println("This Features under maintenance");
+                    System.out.println(("5"));
                     break;
                 case "7":
                     TransFileManager.printCustomerTransactions(customer);

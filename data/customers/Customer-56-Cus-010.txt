@@ -1,0 +1,10 @@
+ID:Cus-010
+CPR:56
+Name:56
+SavingCardNumber:Card Num: 9935093982838963
+SavingCardType:Platinum
+CheckingCardNumber:Card Num: 9556424208012396
+CheckingCardType:Platinum
+Account:Sav-Cus-010:0.0
+Account:Chek-Cus-010:0.0
+Password:7688b6ef52555962d008fff894223582c484517cea7da49ee67800adc7fc8866

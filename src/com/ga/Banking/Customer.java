@@ -62,10 +62,20 @@ public class Customer extends User {
         }
     }
 
+    public void displayBalance(){
+        for (Account account : accounts) {
+            account.getBalance();
+            System.out.println(account.getBalance());
+        }
+    }
+
+
     public static void main(String[] args) {
-//        Customer customer = new Customer("152202020.2", "customer", "password", "cpr");
-//        for (Account account : customer.getAccounts()) {
-//            System.out.println(account.getAcountId());
+        Customer test = new Customer("46565", "Test", "2", "3212459", CardType.Mastercard, CardType.Platinum);
+        for (Account account : test.getAccounts()) {
+            System.out.println(account.getAcountId());
+        }
+        test.displayBalance();
 
 
     }

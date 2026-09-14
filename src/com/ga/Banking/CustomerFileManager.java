@@ -79,7 +79,6 @@ public class CustomerFileManager {
         }
     }
 
-
     public static Optional<Customer> findCustomerByCpr(String cpr) {
 
         File dir = new File(DIRECTORY);
@@ -230,7 +229,6 @@ public class CustomerFileManager {
 
         return Optional.empty();
     }
-
 
     public static String generateNewId() {
         File dir = new File(DIRECTORY);

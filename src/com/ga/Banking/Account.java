@@ -8,6 +8,8 @@ public abstract class Account {
     protected Customer owner;
     private Card card;
     private ArrayList<Transactions> transactions;
+//    private double limitOfday = 0;
+
 
     public Account(String acountId, Customer owner, Card card) {
         AcountId = acountId;
@@ -48,14 +50,21 @@ public abstract class Account {
             System.out.println("Invalid amount.");
             return false;
         }
-
-        if (amount > card.getDeposit_Limit()) {
-            System.out.println("You can't deposit more than " + card.getDeposit_Limit());
+        double dailyLimit = 0;
+        for (Transactions transaction : transactions) {
+            if (transaction.getOperation().equals("Deposit") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
+                dailyLimit += transaction.getAmount();
+            }
+        }
+        if (dailyLimit + amount > card.getDeposit_Own_Limit()) {
+            System.out.println("Your Daily Limit Reached");
+            System.out.println("You can't deposit more than " + card.getDeposit_Own_Limit() + " Per Day");
+            System.out.println("Your Available Balance Is " + (card.getDeposit_Own_Limit() - dailyLimit));
             return false;
         } else {
 
             this.balance += amount;
-            Transactions transaction = new Transactions("Deposit", amount, this.AcountId,balance);
+            Transactions transaction = new Transactions("Deposit", amount, this.AcountId, balance);
             transactions.add(transaction);
             TransFileManager.saveTransaction(owner, transaction);
 
@@ -73,14 +82,26 @@ public abstract class Account {
             System.out.println("Insufficient balance.");
             return false;
         }
+        double dailyLimit = 0;
+        for (Transactions transaction : transactions) {
+            if (transaction.getOperation().equals("Withdraw") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
+                dailyLimit += transaction.getAmount();
+            }
+        }
+        if (dailyLimit + amount > card.getWithdraw_Limit()) {
+            System.out.println("Your Daily Limit Reached");
+            System.out.println("You can't Withdraw more than " + card.getWithdraw_Limit() + " Per Day");
+            System.out.println("Your Available Balance Is " + (card.getWithdraw_Limit() - dailyLimit));
+            return false;
+        } else {
+            this.balance -= amount;
+            Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
+            transactions.add(transaction);
+            TransFileManager.saveTransaction(owner, transaction);
 
-        this.balance -= amount;
-        Transactions transaction = new Transactions("Withdraw", amount, this.AcountId,balance);
-        transactions.add(transaction);
-        TransFileManager.saveTransaction(owner, transaction);
-
-        System.out.println("Withdraw successful. New balance: " + this.balance);
-        return true;
+            System.out.println("Withdraw successful. New balance: " + this.balance);
+            return true;
+        }
     }
 
     public boolean transferFunds(double amount, Account account) {
@@ -96,20 +117,35 @@ public abstract class Account {
             System.out.println("Insufficient balance.");
             return false;
         }
+        double dailyLimit = 0;
+        for (Transactions transaction : transactions) {
+            if (transaction.getOperation().equals("TransferFunds") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
+                dailyLimit += transaction.getAmount();
+            }
+        }
+        if (dailyLimit + amount > card.getTransfer_Own_Limit()) {
+            System.out.println("Your Daily Limit Reached");
+            System.out.println("You can't Transfer more than " + card.getTransfer_Own_Limit() + " Per Day");
+            System.out.println("Your Available Balance Is " + (card.getTransfer_Own_Limit() - dailyLimit));
+            return false;
+        } else {
 
-        this.balance -= amount;
-        account.deposit(amount);
+            this.balance -= amount;
+            account.deposit(amount);
 
-        Transactions transaction = new Transactions("TransferFunds", amount, this.AcountId,balance);
-        transactions.add(transaction);
-        TransFileManager.saveTransaction(owner, transaction);
+            Transactions transaction = new Transactions("TransferFunds", amount, this.AcountId, balance);
+            transactions.add(transaction);
+            TransFileManager.saveTransaction(owner, transaction);
 
-        System.out.println("Transfer successful.");
-        return true;
+            System.out.println("Transfer successful.");
+            return true;
+        }
     }
 
     public void restoreBalance(double balance) {
-        this.balance = balance;
+        for (Account account : getOwner().getAccounts()) {
+            System.out.println(account.getBalance());
+        }
     }
 
     public void printTransactions() {
@@ -118,23 +154,13 @@ public abstract class Account {
         }
     }
 
-//    public static void main(String[] args) {
-//        Customer customer7 = new Customer("123123123", "customer", "password", "cpr");
-//        Account ss = new Saving(customer7.getId(), customer7);
-//        Account ch = new Checking(customer7.getId(), customer7);
-//
-//        System.out.println(ss.getBalance());
-//        System.out.println(ch.getBalance());
-//        ss.deposit(10);
-//        System.out.println(ss.getBalance());
-//        ss.transferFunds(5, ch);
-//        System.out.println(ss.getBalance());
-//        System.out.println(ch.getBalance());
-//
-//        ss.printTransactions();
-//        System.out.println("****************");
-//        ch.printTransactions();
-//
-//    }
-
+    public static void main(String[] args) {
+        Customer test = new Customer("46565", "Test", "2", "3212459", CardType.Mastercard, CardType.Platinum);
+        System.out.println(test.getAccounts());
+//        for (Account account : test.getAccounts()) {
+//            System.out.println(account.balance);
+//        }
+            test.displayBalance();
+    }
 }
+

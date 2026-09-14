@@ -1,0 +1,108 @@
+Operation:Deposit
+Amount:30.0
+Account:Sav-Cus-011
+Balance:30.0
+Date:2026-09-14 09:21:44
+-------------------------
+Operation:Deposit
+Amount:20.0
+Account:Sav-Cus-011
+Balance:50.0
+Date:2026-09-14 09:21:50
+-------------------------
+Operation:Deposit
+Amount:1.0
+Account:Sav-Cus-011
+Balance:51.0
+Date:2026-09-14 09:21:54
+-------------------------
+Operation:Deposit
+Amount:50.0
+Account:Sav-Cus-011
+Balance:101.0
+Date:2026-09-14 09:23:12
+-------------------------
+Operation:Deposit
+Amount:1.0
+Account:Sav-Cus-011
+Balance:102.0
+Date:2026-09-14 09:23:19
+-------------------------
+Operation:Deposit
+Amount:50.0
+Account:Sav-Cus-011
+Balance:152.0
+Date:2026-09-14 09:33:42
+-------------------------
+Operation:Deposit
+Amount:1.0
+Account:Chek-Cus-011
+Balance:1.0
+Date:2026-09-14 09:35:04
+-------------------------
+Operation:Deposit
+Amount:49.0
+Account:Chek-Cus-011
+Balance:50.0
+Date:2026-09-14 09:35:26
+-------------------------
+Operation:Deposit
+Amount:1.0
+Account:Sav-Cus-011
+Balance:153.0
+Date:2026-09-14 09:38:40
+-------------------------
+Operation:Deposit
+Amount:1.0
+Account:Sav-Cus-011
+Balance:154.0
+Date:2026-09-14 09:39:01
+-------------------------
+Operation:Deposit
+Amount:50.0
+Account:Sav-Cus-011
+Balance:204.0
+Date:2026-09-14 09:41:41
+-------------------------
+Operation:Deposit
+Amount:22.0
+Account:Chek-Cus-011
+Balance:72.0
+Date:2026-09-14 09:42:04
+-------------------------
+Operation:Deposit
+Amount:27.0
+Account:Chek-Cus-011
+Balance:99.0
+Date:2026-09-14 09:42:33
+-------------------------
+Operation:Deposit
+Amount:1.0
+Account:Chek-Cus-011
+Balance:100.0
+Date:2026-09-14 09:42:53
+-------------------------
+Operation:Deposit
+Amount:10.0
+Account:Sav-Cus-011
+Balance:214.0
+Date:2026-09-14 09:48:22
+-------------------------
+Operation:Deposit
+Amount:40.0
+Account:Sav-Cus-011
+Balance:254.0
+Date:2026-09-14 09:49:07
+-------------------------
+Operation:Deposit
+Amount:50.0
+Account:Chek-Cus-011
+Balance:150.0
+Date:2026-09-14 09:49:20
+-------------------------
+Operation:DepositToOwn
+Amount:50.0
+Account:Sav-Cus-011
+Balance:304.0
+Date:2026-09-14 09:56:29
+-------------------------
