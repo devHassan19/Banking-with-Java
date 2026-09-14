@@ -143,9 +143,7 @@ public abstract class Account {
     }
 
     public void restoreBalance(double balance) {
-        for (Account account : getOwner().getAccounts()) {
-            System.out.println(account.getBalance());
-        }
+        this.balance = balance;
     }
 
     public void printTransactions() {
@@ -155,12 +153,29 @@ public abstract class Account {
     }
 
     public static void main(String[] args) {
-        Customer test = new Customer("46565", "Test", "2", "3212459", CardType.Mastercard, CardType.Platinum);
-        System.out.println(test.getAccounts());
-//        for (Account account : test.getAccounts()) {
-//            System.out.println(account.balance);
-//        }
-            test.displayBalance();
+//        Customer customer7 = new Customer("123123123", "customer", "password", "cpr");
+//        Account ss = new Saving(customer7.getId(), customer7);
+//        Account ch = new Checking(customer7.getId(), customer7);
+//
+//        System.out.println(ss.getBalance());
+//        System.out.println(ch.getBalance());
+//        ss.deposit(10);
+//        System.out.println(ss.getBalance());
+//        ss.transferFunds(5, ch);
+//        System.out.println(ss.getBalance());
+//        System.out.println(ch.getBalance());
+//
+//        ss.printTransactions();
+//        System.out.println("****************");
+//        ch.printTransactions();
+
+
+        Customer test = new Customer("46565" , "Test","2","3212459",CardType.Mastercard,CardType.Platinum);
+//        System.out.println(test.getAccounts());
+        for (Account account : test.getAccounts()) {
+            System.out.println(account.balance);
+        }
+
     }
 }
 

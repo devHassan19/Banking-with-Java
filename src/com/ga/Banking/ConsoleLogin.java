@@ -253,7 +253,7 @@ public class ConsoleLogin {
                     System.out.println("This Features under maintenance");
                     break;
                 case "6":
-                    System.out.println(("5"));
+                    customer.displayBalance();
                     break;
                 case "7":
                     TransFileManager.printCustomerTransactions(customer);
