@@ -75,20 +75,14 @@ public class ConsoleLogin {
 //                            System.out.println("Incorrect password!");
 //                        }
 
-                    } else {
+                    }
+                    else {
                         System.out.println("User not found!");
                     }
                     break;
 
 
                 case "2":
-//                    System.out.println("\n===== Choose Account =====");
-//                    System.out.println("1- Customer");
-//                    System.out.println("2- Banker");
-//                    System.out.print("Choice: ");
-//                    String userType = scanner.nextLine().trim();
-//
-//                    if (userType.equals("1")) {
                     System.out.println("\n===== Create New Customer =====");
 
                     System.out.print("Enter Your CPR: ");
@@ -148,25 +142,12 @@ public class ConsoleLogin {
                         default:
                             System.out.println("Wrong choice! ,, Default Choice MasterCard");
                     }
-
-
                     String id = CustomerFileManager.generateNewId();
 
                     Customer newCustomer = new Customer(id, name, password, cpr, saveCardType, chekCardType);
                     CustomerFileManager.saveCustomer(newCustomer);
 
                     System.out.println("Created New Customer successfully : !");
-//                    System.out.println("File name: " + newCustomer.getFileName() + ".txt");
-
-//                    } else if (userType.equals("2")) {
-//                        System.out.println("Banker");
-//                        System.out.println("This Features under maintenance");
-//                        System.out.println("See you Soon");
-//                        running = false;
-
-//                    } else {
-//                        System.out.println("Invalid choice.");
-//                    }
                     break;
 
                 case "3":
@@ -275,8 +256,40 @@ public class ConsoleLogin {
 
                     break;
                 case "5":
-                    System.out.println("This Features under maintenance");
+                    System.out.println("-- Source account --");
+                    Account from = selectAccount(customer, scanner);
+                    if (from == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+                    System.out.println("-- Destination account --");
+                    Customer receiverCustomer = selectOtherCustomer(customer, scanner);
+
+                    if (receiverCustomer == null) {
+                        System.out.println("Invalid customer selection.");
+                        break;
+                    }
+                    Account toAccount = selectAccount(receiverCustomer, scanner);
+
+                    if (toAccount == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+
+                    System.out.print("Enter amount to Transfer: ");
+                    double receiveAmount = parseAmount(scanner.nextLine().trim());
+
+                    if (receiveAmount <= 0) {
+                        System.out.println("Invalid amount.");
+                        break;
+                    }
+
+                    if (from.transferToAnother(receiveAmount, toAccount)) {
+                        CustomerFileManager.saveCustomer(customer);
+                        CustomerFileManager.saveCustomer(receiverCustomer);
+                    }
                     break;
+
                 case "6":
                     customer.displayBalance();
                     break;
@@ -373,7 +386,7 @@ public class ConsoleLogin {
 
             System.out.println(
                     (i + 1) + "- " +
-                            " Name: " + customer.getName() + " "+
+                            " Name: " + customer.getName() + " " +
                             "CPR:" + customer.getCpr() +
                             " ID:" + customer.getId()
             );

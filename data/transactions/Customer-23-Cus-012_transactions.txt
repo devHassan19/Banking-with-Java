@@ -52,3 +52,9 @@ Account:Chek-Cus-012
 Balance:316000.0
 Date:2026-09-14 12:19:07
 -------------------------
+Operation:transferToAnother
+Amount:20000.0
+Account:Chek-Cus-012
+Balance:296000.0
+Date:2026-09-14 14:29:13
+-------------------------

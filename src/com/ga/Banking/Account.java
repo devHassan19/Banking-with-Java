@@ -170,6 +170,31 @@ public abstract class Account {
         }
     }
 
+    public boolean transferToAnother(double amount, Account account) {
+        double dailyLimit = 0;
+        for (Transactions transaction : transactions) {
+            if (transaction.getOperation().equals("transferToAnother") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
+                dailyLimit += transaction.getAmount();
+            }
+        }
+        if (dailyLimit + amount > card.getTransfer_Limit()) {
+            System.out.println("Your Daily Limit Reached");
+            System.out.println("You can't deposit more than " + card.getTransfer_Limit() + " Per Day");
+            System.out.println("Your Available Balance Is " + (card.getTransfer_Limit() - dailyLimit));
+            return false;
+        } else {
+
+            this.balance -= amount;
+            account.balance += amount;
+            Transactions transaction = new Transactions("transferToAnother", amount, this.AcountId, balance);
+            transactions.add(transaction);
+            TransFileManager.saveTransaction(owner, transaction);
+
+            System.out.println("Transfer successful. New balance: " + this.balance);
+            return true;
+        }
+    }
+
     public void restoreBalance(double balance) {
         this.balance = balance;
     }
@@ -198,7 +223,7 @@ public abstract class Account {
 //        ch.printTransactions();
 
 
-        Customer test = new Customer("46565" , "Test","2","3212459",CardType.Mastercard,CardType.Platinum);
+        Customer test = new Customer("46565", "Test", "2", "3212459", CardType.Mastercard, CardType.Platinum);
 //        System.out.println(test.getAccounts());
         for (Account account : test.getAccounts()) {
             System.out.println(account.balance);
