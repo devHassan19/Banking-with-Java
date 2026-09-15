@@ -1,0 +1,11 @@
+ID:Cus-019
+CPR:258
+Name:258
+SavingCardNumber:Card Num: 4943110134693670
+SavingCardType:Platinum
+CheckingCardNumber:Card Num: 9505442605777837
+CheckingCardType:Platinum
+Account:Sav-Cus-019:-65.0
+Account:Chek-Cus-019:-135.0
+Account Status:true
+Password:a30f4ef42176d28f0e2293533c5f532e9c9c5696c68813b35315d17edc44f6b1

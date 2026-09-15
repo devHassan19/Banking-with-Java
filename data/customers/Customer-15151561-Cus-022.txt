@@ -1,0 +1,11 @@
+ID:Cus-022
+CPR:521516516
+Name:15151561
+SavingCardNumber:Card Num: 1803297904705012
+SavingCardType:Titanium
+CheckingCardNumber:Card Num: 5809371986898274
+CheckingCardType:Mastercard
+Account:Sav-Cus-022:0.0
+Account:Chek-Cus-022:0.0
+Account Status:true
+Password:6617b538f93d41ba6f251c7a3a78b6ac5742ef2a014c5efd7c51812d7942a4e8

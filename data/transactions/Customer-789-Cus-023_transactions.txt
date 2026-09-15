@@ -1,0 +1,42 @@
+Operation:Withdraw
+Amount:90.0
+Account:Chek-Cus-023
+Balance:-90.0
+Date:2026-09-15 13:05:06
+-------------------------
+Operation:Withdraw
+Amount:10.0
+Account:Chek-Cus-023
+Balance:-135.0
+Date:2026-09-15 13:05:18
+-------------------------
+Operation:Withdraw
+Amount:60.0
+Account:Sav-Cus-023
+Balance:-60.0
+Date:2026-09-15 13:06:54
+-------------------------
+Operation:Withdraw
+Amount:40.0
+Account:Sav-Cus-023
+Balance:-135.0
+Date:2026-09-15 13:07:01
+-------------------------
+Operation:Deposit
+Amount:200.0
+Account:Sav-Cus-023
+Balance:65.0
+Date:2026-09-15 13:08:01
+-------------------------
+Operation:Withdraw
+Amount:60.0
+Account:Sav-Cus-023
+Balance:5.0
+Date:2026-09-15 13:08:06
+-------------------------
+Operation:Withdraw
+Amount:60.0
+Account:Sav-Cus-023
+Balance:-55.0
+Date:2026-09-15 13:08:10
+-------------------------

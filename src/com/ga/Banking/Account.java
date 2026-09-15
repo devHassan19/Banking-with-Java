@@ -89,26 +89,28 @@ public abstract class Account {
             System.out.println("Your Available Balance Is " + (card.getWithdraw_Limit() - dailyLimit));
             return false;
         } else {
-            if (this.balance <= 0) {
+
+            if (this.balance - amount < -LIMIT_OF_OVERDRAFT) {
+                System.out.println("Your Limit Overdraft Is 100 ,, You Enter Over than Limit");
+                return false;
+            }
+
+            boolean overdraft = this.balance  < 0;
+
+            this.balance -= amount;
+
+            if (overdraft) {
+                this.balance -= FEES_OF_OVERDRAFT;
+                overdraftFees += FEES_OF_OVERDRAFT;
+                makeOverdraft++;
+                System.out.println("OverDreft Fees Add to your Balance: " + FEES_OF_OVERDRAFT);
+
                 if (makeOverdraft >= 2) {
                     isActive = false;
                     System.out.println("Your Account is Deactivate");
+                    System.out.println("Your Reach Limit of Overdraft 2 Times");
                     System.out.println("Should pay all fees to be active");
-                } else {
-                    if (this.balance - amount < LIMIT_OF_OVERDRAFT) {
-                        this.balance -= amount;
-                        this.balance -= FEES_OF_OVERDRAFT;
-                        makeOverdraft++;
-                        Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
-                        transactions.add(transaction);
-                        TransFileManager.saveTransaction(owner, transaction);
-
-                    } else {
-                        System.out.println("Your Limit Overdraft Is 100 ,, Reached Limit");
-                    }
                 }
-            } else {
-                this.balance -= amount;
             }
             Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
             transactions.add(transaction);
@@ -120,18 +122,6 @@ public abstract class Account {
     }
 
     public boolean deposit(double amount) {
-        if (this.balance > 0) {
-            isActive = true;
-        }else{
-            this.balance += amount;
-            System.out.println("Deposit successful. New balance: " + this.balance);
-            Transactions transaction = new Transactions("Deposit", amount, this.AcountId, balance);
-            transactions.add(transaction);
-            TransFileManager.saveTransaction(owner, transaction);
-            System.out.println("Your Acoount Still Deactivate");
-            System.out.println("Your Shuld pay all Fees to use Other service");
-            return false;
-        }
         if (amount <= 0) {
             System.out.println("Invalid amount.");
             return false;
@@ -150,6 +140,23 @@ public abstract class Account {
         } else {
 
             this.balance += amount;
+
+            if (!isActive) {
+                System.out.println("Your Account is Deactivate");
+
+                if (this.balance >= overdraftFees) {
+                    this.balance -= overdraftFees;
+                }
+                System.out.println(overdraftFees);
+//                    if (overdraftFees >= 0) {
+//                        isActive = true;
+//                        System.out.println("Your Account is Active");
+//                    } else {
+//                        System.out.println("Your Acoount Still Deactivate");
+//                        System.out.println("Your Shuld pay all Fees to use Other service");
+//                    }
+                }
+//            }
             Transactions transaction = new Transactions("Deposit", amount, this.AcountId, balance);
             transactions.add(transaction);
             TransFileManager.saveTransaction(owner, transaction);

@@ -1,0 +1,11 @@
+ID:Cus-020
+CPR:999
+Name:999
+SavingCardNumber:Card Num: 5060430394227704
+SavingCardType:Mastercard
+CheckingCardNumber:Card Num: 3438013645855817
+CheckingCardType:Mastercard
+Account:Sav-Cus-020:-370.0
+Account:Chek-Cus-020:0.0
+Account Status:false
+Password:83cf8b609de60036a8277bd0e96135751bbc07eb234256d4b65b893360651bf2

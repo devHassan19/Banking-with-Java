@@ -40,3 +40,9 @@ Account:Chek-Cus-006
 Balance:-222.0
 Date:2026-09-15 10:37:05
 -------------------------
+Operation:Deposit
+Amount:10.0
+Account:Chek-Cus-006
+Balance:-212.0
+Date:2026-09-15 11:52:31
+-------------------------
