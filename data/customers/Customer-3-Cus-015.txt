@@ -1,0 +1,10 @@
+ID:Cus-015
+CPR:3
+Name:3
+SavingCardNumber:Card Num: 4592426478335184
+SavingCardType:Mastercard
+CheckingCardNumber:Card Num: 4445985113242328
+CheckingCardType:Mastercard
+Account:Sav-Cus-015:0.0
+Account:Chek-Cus-015:0.0
+Password:c6f3ac57944a531490cd39902d0f777715fd005efac9a30622d5f5205e7f6894

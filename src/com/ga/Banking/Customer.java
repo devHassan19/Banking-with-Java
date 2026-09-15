@@ -51,8 +51,6 @@ public class Customer extends User {
         return "Customer-" + getName() + "-" + getId();
     }
 
-
-
     public void fetchAccounts() {
         for (Account account : accounts) {
             account.getAcountId();

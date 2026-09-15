@@ -1,0 +1,42 @@
+Operation:Withdraw
+Amount:20.0
+Account:Chek-Cus-006
+Balance:-20.0
+Date:2026-09-15 10:08:57
+-------------------------
+Operation:Withdraw
+Amount:30.0
+Account:Chek-Cus-006
+Balance:-85.0
+Date:2026-09-15 10:32:50
+-------------------------
+Operation:Withdraw
+Amount:10.0
+Account:Chek-Cus-006
+Balance:-130.0
+Date:2026-09-15 10:32:57
+-------------------------
+Operation:Withdraw
+Amount:2.0
+Account:Chek-Cus-006
+Balance:-130.0
+Date:2026-09-15 10:33:05
+-------------------------
+Operation:Withdraw
+Amount:10.0
+Account:Chek-Cus-006
+Balance:-175.0
+Date:2026-09-15 10:36:42
+-------------------------
+Operation:Withdraw
+Amount:12.0
+Account:Chek-Cus-006
+Balance:-222.0
+Date:2026-09-15 10:36:56
+-------------------------
+Operation:Withdraw
+Amount:12.0
+Account:Chek-Cus-006
+Balance:-222.0
+Date:2026-09-15 10:37:05
+-------------------------

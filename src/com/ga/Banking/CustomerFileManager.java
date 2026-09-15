@@ -48,6 +48,7 @@ public class CustomerFileManager {
                         account.getAcountId() + ":" +
                         account.getBalance() + "\n");
             }
+            writer.write("Account Status:" + customer.getAccounts().getFirst().isActive() + "\n");
 
             writer.write("Password:" + customer.getPassword() + "\n");
 

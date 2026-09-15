@@ -7,6 +7,12 @@ public abstract class Account {
     protected double balance;
     protected Customer owner;
     private Card card;
+    private int makeOverdraft;
+    private double overdraftFees;
+    private boolean isActive = true;
+    private final Double FEES_OF_OVERDRAFT = 35.0;
+    private final Double LIMIT_OF_OVERDRAFT = 100.0;
+
     private ArrayList<Transactions> transactions;
 //    private double limitOfday = 0;
 
@@ -17,6 +23,7 @@ public abstract class Account {
         this.owner = owner;
         this.card = card;
         this.transactions = new ArrayList<>();
+        isActive = true;
     }
 
     public Account(String acountId, ArrayList<Transactions> transactions) {
@@ -37,6 +44,22 @@ public abstract class Account {
         return balance;
     }
 
+    public int getMakeOverdraft() {
+        return makeOverdraft;
+    }
+
+    public double getOverdraftFees() {
+        return overdraftFees;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive() {
+        isActive = true;
+    }
+
     public Customer getOwner() {
         return owner;
     }
@@ -46,12 +69,12 @@ public abstract class Account {
     }
 
     public boolean withdraw(double amount) {
-        if (amount <= 0) {
-            System.out.println("Invalid amount.");
+        if (!isActive) {
+            System.out.println("Your Acoount is Deactivate");
             return false;
         }
-        if (amount > this.balance) {
-            System.out.println("Insufficient balance.");
+        if (amount <= 0) {
+            System.out.println("Invalid amount.");
             return false;
         }
         double dailyLimit = 0;
@@ -66,7 +89,27 @@ public abstract class Account {
             System.out.println("Your Available Balance Is " + (card.getWithdraw_Limit() - dailyLimit));
             return false;
         } else {
-            this.balance -= amount;
+            if (this.balance <= 0) {
+                if (makeOverdraft >= 2) {
+                    isActive = false;
+                    System.out.println("Your Account is Deactivate");
+                    System.out.println("Should pay all fees to be active");
+                } else {
+                    if (this.balance - amount < LIMIT_OF_OVERDRAFT) {
+                        this.balance -= amount;
+                        this.balance -= FEES_OF_OVERDRAFT;
+                        makeOverdraft++;
+                        Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
+                        transactions.add(transaction);
+                        TransFileManager.saveTransaction(owner, transaction);
+
+                    } else {
+                        System.out.println("Your Limit Overdraft Is 100 ,, Reached Limit");
+                    }
+                }
+            } else {
+                this.balance -= amount;
+            }
             Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
             transactions.add(transaction);
             TransFileManager.saveTransaction(owner, transaction);
@@ -77,6 +120,18 @@ public abstract class Account {
     }
 
     public boolean deposit(double amount) {
+        if (this.balance > 0) {
+            isActive = true;
+        }else{
+            this.balance += amount;
+            System.out.println("Deposit successful. New balance: " + this.balance);
+            Transactions transaction = new Transactions("Deposit", amount, this.AcountId, balance);
+            transactions.add(transaction);
+            TransFileManager.saveTransaction(owner, transaction);
+            System.out.println("Your Acoount Still Deactivate");
+            System.out.println("Your Shuld pay all Fees to use Other service");
+            return false;
+        }
         if (amount <= 0) {
             System.out.println("Invalid amount.");
             return false;
@@ -203,6 +258,10 @@ public abstract class Account {
         for (Transactions transaction : transactions) {
             System.out.println(transaction);
         }
+    }
+
+    public void changeStatus() {
+        isActive = !isActive;
     }
 
     public static void main(String[] args) {

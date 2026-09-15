@@ -24,7 +24,7 @@ public class ConsoleLogin {
                     String loginCpr = scanner.nextLine().trim();
 
                     Optional<Customer> foundCustomer = CustomerFileManager.findCustomerByCpr(loginCpr);
-//                    Optional<Banker> foundBanker = BankerFileManager.findBankerById(loginId);
+                    Optional<Banker> foundBanker = BankerFileManager.findBankerByCpr(loginCpr);
 
                     if (foundCustomer.isPresent()) {
                         Customer loggedCustomer = foundCustomer.get();
@@ -57,26 +57,35 @@ public class ConsoleLogin {
                                     );
                                 } else {
                                     System.out.println("Too many incorrect attempts!");
+                                    System.out.println("Please Wait ..");
+
+                                    for (int i = 60; i > 0; i--) {
+                                        System.out.println("\rTry again in " + i + " seconds!");
+                                        try {
+                                            Thread.sleep(1000);
+                                        } catch (InterruptedException e) {
+
+                                        }
+                                    }
+                                    System.out.println("\rYou can Try Again Now");
                                 }
                             }
                         }
 
+                    } else if (foundBanker.isPresent()) {
+                        Banker loggedBanker = foundBanker.get();
 
-//                    } else if (foundBanker.isPresent()) {
-//                        Banker loggedBanker = foundBanker.get();
-//
-//                        System.out.print("Enter Password: ");
-//                        String inputPassword = scanner.nextLine().trim();
-//
-//                        if (loggedBanker.checkPassword(inputPassword)) {
-//                            System.out.println("Login successful! Welcome " + loggedBanker.getName());
-//                            showBankerMenu(loggedBanker, scanner);
-//                        } else {
-//                            System.out.println("Incorrect password!");
-//                        }
+                        System.out.print("Enter Password: ");
+                        String inputPassword = scanner.nextLine().trim();
 
-                    }
-                    else {
+                        if (loggedBanker.checkPassword(inputPassword)) {
+                            System.out.println("Login successful! Welcome " + loggedBanker.getName());
+                            showBankerMenu(loggedBanker, scanner);
+                        } else {
+                            System.out.println("Incorrect password!");
+                        }
+
+                    } else {
                         System.out.println("User not found!");
                     }
                     break;
@@ -174,6 +183,7 @@ public class ConsoleLogin {
             System.out.println("6- Display My Balance");
             System.out.println("7- Account Statment");
             System.out.println("8- Logout");
+            System.out.println("9- Change Status");
             System.out.print("Choose: ");
 
             String option = scanner.nextLine().trim();
@@ -299,6 +309,16 @@ public class ConsoleLogin {
                 case "8":
                     System.out.println("Logged out successfully.");
                     loggedIn = false;
+                    break;
+                case "9":
+                    Account acc = selectAccount(customer, scanner);
+                    if (acc == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+                    acc.changeStatus();
+                    System.out.println("Stat Updated for account selection.");
+                    CustomerFileManager.saveCustomer(customer);
                     break;
                 default:
                     System.out.println("Invalid choice, try again.");
