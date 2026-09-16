@@ -1,0 +1,10 @@
+ID:Cus-025
+CPR:9900000013
+Name:Test Customer 13
+SavingCardNumber:Card Num: 9300021630624770
+SavingCardType:Platinum
+CheckingCardNumber:Card Num: 8365975498118725
+CheckingCardType:Titanium
+Account:Sav-Cus-025:0.0:true
+Account:Chek-Cus-025:0.0:true
+Password:1992c74e378136e63740c32b2aa573b4432e0c70114bebbb5d0f8e10df2fca9a

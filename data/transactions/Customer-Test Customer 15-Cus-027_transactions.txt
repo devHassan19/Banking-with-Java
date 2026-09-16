@@ -1,0 +1,12 @@
+Operation:DepositToAnother
+Amount:20.0
+Account:Chek-Cus-027
+Balance:20.0
+Date:2026-09-16 14:16:03
+-------------------------
+Operation:Deposit
+Amount:20.0
+Account:Sav-Cus-027
+Balance:20.0
+Date:2026-09-16 14:16:20
+-------------------------

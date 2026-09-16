@@ -1,0 +1,6 @@
+Operation:DepositToAnother
+Amount:256.0
+Account:Sav-Cus-026
+Balance:256.0
+Date:2026-09-16 14:16:36
+-------------------------

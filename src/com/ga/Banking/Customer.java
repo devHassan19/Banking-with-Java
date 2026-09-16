@@ -54,10 +54,10 @@ public class Customer extends User {
     public boolean hasDeactivatedAccount() {
         for (Account account : accounts) {
             if (!account.isActive()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
 

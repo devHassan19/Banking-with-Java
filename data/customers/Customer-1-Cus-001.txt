@@ -1,10 +1,10 @@
 ID:Cus-001
 CPR:1
 Name:1
-SavingCardNumber:Card Num: 2303957446929938
+SavingCardNumber:Card Num: 3726246653757493
 SavingCardType:Platinum
-CheckingCardNumber:Card Num: 8396873827912087
+CheckingCardNumber:Card Num: 1485965839231646
 CheckingCardType:Platinum
-Account:Sav-Cus-001:530.0:true
-Account:Chek-Cus-001:-110.0:false
+Account:Sav-Cus-001:0.0:true
+Account:Chek-Cus-001:0.0:false
 Password:6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b

@@ -308,6 +308,63 @@ public class CustomerFileManager {
         System.out.println("All Customers Deleted");
     }
 
+    public static void createTestCustomers(int count) {
+
+        for (int i = 1; i <= count; i++) {
+
+            String id = CustomerFileManager.generateNewId();
+
+            String cpr = "990000" + String.format("%04d", i);
+            String name = "Test Customer " + i;
+            String password = "Pass" + i + "123";
+
+            // Saving Card
+            CardType saveCardType;
+
+            switch (i % 3) {
+                case 1:
+                    saveCardType = CardType.Platinum;
+                    break;
+                case 2:
+                    saveCardType = CardType.Titanium;
+                    break;
+                default:
+                    saveCardType = CardType.Mastercard;
+                    break;
+            }
+
+            // Checking Card
+            CardType chekCardType;
+
+            switch ((i + 1) % 3) {
+                case 1:
+                    chekCardType = CardType.Platinum;
+                    break;
+                case 2:
+                    chekCardType = CardType.Titanium;
+                    break;
+                default:
+                    chekCardType = CardType.Mastercard;
+                    break;
+            }
+
+            Customer newCustomer = new Customer(
+                    id,
+                    name,
+                    password,
+                    cpr,
+                    saveCardType,
+                    chekCardType
+            );
+
+            CustomerFileManager.saveCustomer(newCustomer);
+
+            System.out.println("Created Customer: " + name);
+        }
+
+        System.out.println("\nSuccessfully created " + count + " customers!");
+    }
+
     public static ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
 
@@ -430,9 +487,8 @@ public class CustomerFileManager {
         return customers;
     }
 
-//    public static void main(String[] args) {
-//        Long x;
-//        x = genCardNum();
-//        System.out.println(x);
-//    }
+    public static void main(String[] args) {
+        createTestCustomers(25);
+
+    }
 }

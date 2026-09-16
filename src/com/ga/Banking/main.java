@@ -4,6 +4,7 @@ public class main {
     public static void main(String[] args) {
 //CustomerFileManager.printAllCustomers();
 //CustomerFileManager.removeAllCustomers();
-CustomerFileManager.printAllCustomers();
+//        TransFileManager.removeAllTransactions();
+        CustomerFileManager.printAllCustomers();
     }
 }

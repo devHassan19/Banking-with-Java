@@ -1,0 +1,10 @@
+ID:Cus-035
+CPR:9900000023
+Name:Test Customer 23
+SavingCardNumber:Card Num: 1075447053409801
+SavingCardType:Titanium
+CheckingCardNumber:Card Num: 1214890012066832
+CheckingCardType:Mastercard
+Account:Sav-Cus-035:0.0:true
+Account:Chek-Cus-035:0.0:true
+Password:657d1269072a2fa5e8e2548cd602029561b3ff231344dac5f7ffa7f11f782f06

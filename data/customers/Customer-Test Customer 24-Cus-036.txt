@@ -1,0 +1,10 @@
+ID:Cus-036
+CPR:9900000024
+Name:Test Customer 24
+SavingCardNumber:Card Num: 9622894269292377
+SavingCardType:Mastercard
+CheckingCardNumber:Card Num: 5562488580870761
+CheckingCardType:Platinum
+Account:Sav-Cus-036:0.0:true
+Account:Chek-Cus-036:0.0:true
+Password:22becfd4485967fc0c3a874b648af9fd1f2ba7325a1ec623940f344893ef509e

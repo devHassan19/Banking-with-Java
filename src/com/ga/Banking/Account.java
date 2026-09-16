@@ -72,61 +72,6 @@ public abstract class Account {
         return transactions;
     }
 
-//    public boolean withdraw(double amount) {
-//        double overdraftUsed = 0;
-//        if (!isActive) {
-//            System.out.println("Your Acoount is Deactivate");
-//            return false;
-//        }
-//        if (amount <= 0) {
-//            System.out.println("Invalid amount.");
-//            return false;
-//        }
-//        double dailyLimit = 0;
-//        for (Transactions transaction : transactions) {
-//            if (transaction.getOperation().equals("Withdraw") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
-//                dailyLimit += transaction.getAmount();
-//            }
-//        }
-//        if (dailyLimit + amount > card.getWithdraw_Limit()) {
-//            System.out.println("Your Daily Limit Reached");
-//            System.out.println("You can't Withdraw more than " + card.getWithdraw_Limit() + " Per Day");
-//            System.out.println("Your Available Balance Is " + (card.getWithdraw_Limit() - dailyLimit));
-//            return false;
-//        } else {
-//
-//            if (this.balance - amount < -LIMIT_OF_OVERDRAFT) {
-//                System.out.println("Your Limit Overdraft Is 100 ,, You Enter Over than Limit");
-//                return false;
-//            }
-//
-//            boolean overdraft = this.balance - amount < 0;
-//
-//            this.balance -= amount;
-//
-//            if (overdraft) {
-//                overdraftUsed -= amount;
-//                this.balance -= FEES_OF_OVERDRAFT;
-//                overdraftFees += FEES_OF_OVERDRAFT;
-//                makeOverdraft++;
-//                System.out.println("OverDreft Fees Add to your Balance: " + FEES_OF_OVERDRAFT);
-//
-//                if (makeOverdraft >= 2) {
-//                    isActive = false;
-//                    System.out.println("Your Account is Deactivate");
-//                    System.out.println("Your Reach Limit of Overdraft 2 Times");
-//                    System.out.println("Should pay all fees to be active");
-//                }
-//            }
-//            Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
-//            transactions.add(transaction);
-//            TransFileManager.saveTransaction(owner, transaction);
-//
-//            System.out.println("Withdraw successful. New balance: " + this.balance);
-//            return true;
-//        }
-//    }
-
     public boolean withdraw(double amount) {
 
         if (!isActive) {

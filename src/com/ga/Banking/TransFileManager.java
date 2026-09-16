@@ -57,4 +57,26 @@ public class TransFileManager {
         }
     }
 
+    public static void removeAllTransactions() {
+        File dir = new File(DIRECTORY);
+
+        File[] files = dir.listFiles((d, name) ->
+                name.startsWith("Customer-") && name.endsWith(".txt"));
+
+        if (files == null || files.length == 0) {
+            System.out.println("No Transactions Found");
+            return;
+        }
+
+        for (File file : files) {
+            if (file.delete()) {
+                System.out.println("Deleted: " + file.getName());
+            } else {
+                System.out.println("Failed to delete: " + file.getName());
+            }
+        }
+
+        System.out.println("All Transactions Deleted");
+    }
+
 }

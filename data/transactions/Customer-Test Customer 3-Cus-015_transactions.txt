@@ -1,0 +1,6 @@
+Operation:Deposit
+Amount:5000.0
+Account:Sav-Cus-015
+Balance:5000.0
+Date:2026-09-16 14:47:01
+-------------------------

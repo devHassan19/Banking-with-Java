@@ -37,11 +37,7 @@ public class ConsoleLogin {
                             String inputPassword = scanner.nextLine().trim();
 
                             if (loggedCustomer.checkPassword(inputPassword)) {
-
-                                System.out.println(
-                                        "Login successful! Welcome " + loggedCustomer.getName()
-                                );
-
+                                System.out.println("Login successful! Welcome " + loggedCustomer.getName());
                                 showCustomerMenu(loggedCustomer, scanner);
                                 break;
 
@@ -89,7 +85,6 @@ public class ConsoleLogin {
                         System.out.println("User not found!");
                     }
                     break;
-
 
                 case "2":
                     System.out.println("\n===== Create New Customer =====");
@@ -181,9 +176,8 @@ public class ConsoleLogin {
             System.out.println("4- Deposit To Another Account");
             System.out.println("5- Transfer  To Another Account");
             System.out.println("6- Display My Balance");
-            System.out.println("7- Account Statment");
+            System.out.println("7- Display Transaction / Account Statment");
             System.out.println("8- Logout");
-            System.out.println("9- Change Status");
             System.out.print("Choose: ");
 
             String option = scanner.nextLine().trim();
@@ -220,7 +214,7 @@ public class ConsoleLogin {
                 case "3": {
                     System.out.println("-- Source account --");
                     Account from = selectAccount(customer, scanner);
-                    if (!customer.hasDeactivatedAccount()){
+                    if (!customer.hasDeactivatedAccount()) {
                         System.out.println("Source account has been deactivated.");
                         break;
                     }
@@ -243,34 +237,38 @@ public class ConsoleLogin {
                     break;
                 }
                 case "4":
-                    Customer otherCustomer = selectOtherCustomer(customer, scanner);
-                    if (otherCustomer == null) {
-                        System.out.println("Invalid customer selection.");
+                    System.out.print("Enter destination customer's CPR: ");
+                    String cpr = scanner.nextLine().trim();
+                    Optional<Customer> foundCustomer = CustomerFileManager.findCustomerByCpr(cpr);
+                    if (foundCustomer.isPresent()) {
+                        Customer getCust = foundCustomer.get();
+
+                        Account destination = selectAccount(getCust, scanner);
+                        if (customer.hasDeactivatedAccount()) {
+                            System.out.println("Source account has been deactivated.");
+                            break;
+                        }
+
+                        if (destination == null) {
+                            System.out.println("Invalid account selection.");
+                            break;
+                        }
+
+                        System.out.print("Enter amount to deposit: ");
+                        double amount = parseAmount(scanner.nextLine().trim());
+
+                        if (amount <= 0) {
+                            System.out.println("Invalid amount.");
+                            break;
+                        }
+
+                        if (destination.depositToAnother(amount)) {
+                            CustomerFileManager.saveCustomer(getCust);
+                        }
+                    } else {
+                        System.out.println("Customer not found.");
                         break;
                     }
-
-                    Account destination = selectAccount(otherCustomer, scanner);
-                    if (!customer.hasDeactivatedAccount()){
-                        System.out.println("Source account has been deactivated.");
-                        break;
-                    }
-
-                    if (destination == null) {
-                        System.out.println("Invalid account selection.");
-                        break;
-                    }
-
-                    System.out.print("Enter amount to deposit: ");
-                    double amount = parseAmount(scanner.nextLine().trim());
-
-                    if (amount <= 0) {
-                        System.out.println("Invalid amount.");
-                        break;
-                    }
-                    if (destination.depositToAnother(amount)) {
-                        CustomerFileManager.saveCustomer(otherCustomer);
-                    }
-
                     break;
                 case "5":
                     System.out.println("-- Source account --");
@@ -279,43 +277,44 @@ public class ConsoleLogin {
                         System.out.println("Invalid account selection.");
                         break;
                     }
-                    if (!customer.hasDeactivatedAccount()){
+                    if (customer.hasDeactivatedAccount()) {
                         System.out.println("Source account has been deactivated.");
                         break;
                     }
-                    System.out.println("-- Destination account --");
-                    Customer receiverCustomer = selectOtherCustomer(customer, scanner);
+                    System.out.print("Enter Receiver customer's CPR: ");
+                    String receiverCustomer = scanner.nextLine().trim();
+                    Optional<Customer> customerReceiver = CustomerFileManager.findCustomerByCpr(receiverCustomer);
+                    if (customerReceiver.isPresent()) {
+                        Customer toCust = customerReceiver.get();
 
-                    if (receiverCustomer == null) {
-                        System.out.println("Invalid customer selection.");
+                        Account toAccount = selectAccount(toCust, scanner);
+                        if (toAccount == null) {
+                            System.out.println("Invalid account selection.");
+                            break;
+                        }
+
+                        System.out.print("Enter amount to Transfer: ");
+                        double receiveAmount = parseAmount(scanner.nextLine().trim());
+
+                        if (receiveAmount <= 0) {
+                            System.out.println("Invalid amount.");
+                            break;
+                        }
+
+                        if (from.transferToAnother(receiveAmount, toAccount)) {
+                            CustomerFileManager.saveCustomer(customer);
+                            CustomerFileManager.saveCustomer(toCust);
+                        }
+                    } else {
+                        System.out.println("Customer not found.");
                         break;
                     }
-                    Account toAccount = selectAccount(receiverCustomer, scanner);
-
-                    if (toAccount == null) {
-                        System.out.println("Invalid account selection.");
-                        break;
-                    }
-
-                    System.out.print("Enter amount to Transfer: ");
-                    double receiveAmount = parseAmount(scanner.nextLine().trim());
-
-                    if (receiveAmount <= 0) {
-                        System.out.println("Invalid amount.");
-                        break;
-                    }
-
-                    if (from.transferToAnother(receiveAmount, toAccount)) {
-                        CustomerFileManager.saveCustomer(customer);
-                        CustomerFileManager.saveCustomer(receiverCustomer);
-                    }
-                    break;
-
                 case "6":
                     customer.displayBalance();
                     break;
                 case "7":
-                    TransFileManager.printCustomerTransactions(customer);
+//                    TransFileManager.printCustomerTransactions(customer);
+                    showTransMenu(customer, scanner);
                     break;
                 case "8":
                     System.out.println("Logged out successfully.");
@@ -350,20 +349,103 @@ public class ConsoleLogin {
         while (loggedIn) {
             System.out.println("\n===== Banker Menu =====");
             System.out.println("1- View Customer Accounts");
-            System.out.println("2- Freeze/Unfreeze Account");
-            System.out.println("3- Logout");
+            System.out.println("2- Create New Account");
+            System.out.println("3- Freeze/Unfreeze Account");
+            System.out.println("4- Logout");
             System.out.print("Choose: ");
 
             String option = scanner.nextLine().trim();
 
             switch (option) {
                 case "1":
-                    System.out.println("View Customer Accounts - not implemented yet");
+//                    System.out.println("View Customer Accounts - not implemented yet");
+                    CustomerFileManager.printAllCustomers();
                     break;
                 case "2":
-                    System.out.println("Freeze/Unfreeze - not implemented yet");
+                    System.out.println("\n===== Create New Customer =====");
+
+                    System.out.print("Enter Your CPR: ");
+                    String cpr = scanner.nextLine().trim();
+
+                    System.out.print("Enter Your Name:");
+                    String name = scanner.nextLine().trim();
+
+                    System.out.print("Enter Your Password: ");
+                    String password = scanner.nextLine().trim();
+
+                    System.out.println("\n===== Saveing Type Of Card =====");
+                    System.out.println("1- Platinum");
+                    System.out.println("2- Titanium");
+                    System.out.println("3- Mastercard");
+                    System.out.print("Choice: ");
+
+                    String saveChoice = scanner.nextLine().trim();
+
+                    CardType saveCardType = CardType.Mastercard;
+
+                    switch (saveChoice) {
+                        case "1":
+                            saveCardType = CardType.Platinum;
+                            break;
+                        case "2":
+                            saveCardType = CardType.Titanium;
+                            break;
+                        case "3":
+                            saveCardType = CardType.Mastercard;
+                            break;
+                        default:
+                            System.out.println("Wrong choice! ,, Default Choice MasterCard");
+                    }
+
+
+                    System.out.println("\n===== Checking Type Of Card =====");
+                    System.out.println("1- Platinum");
+                    System.out.println("2- Titanium");
+                    System.out.println("3- Mastercard");
+                    System.out.print("Choice: ");
+
+                    String chekChoice = scanner.nextLine().trim();
+
+                    CardType chekCardType = CardType.Mastercard;
+
+                    switch (chekChoice) {
+                        case "1":
+                            chekCardType = CardType.Platinum;
+                            break;
+                        case "2":
+                            chekCardType = CardType.Titanium;
+                            break;
+                        case "3":
+                            chekCardType = CardType.Mastercard;
+                            break;
+                        default:
+                            System.out.println("Wrong choice! ,, Default Choice MasterCard");
+                    }
+                    String id = CustomerFileManager.generateNewId();
+
+                    Customer newCustomer = new Customer(id, name, password, cpr, saveCardType, chekCardType);
+                    CustomerFileManager.saveCustomer(newCustomer);
+
+                    System.out.println("Created New Customer successfully : !");
                     break;
                 case "3":
+                    Customer selectedCustomer = selectCustomerForBanker(scanner);
+                    if (selectedCustomer == null) {
+                        break;
+                    }
+
+                    Account selectedAccount = selectAccount(selectedCustomer, scanner);
+
+                    if (selectedAccount == null) {
+                        System.out.println("Invalid account selection.");
+                        break;
+                    }
+
+                    selectedAccount.changeStatus();
+                    System.out.println("Account status updated successfully.");
+                    CustomerFileManager.saveCustomer(selectedCustomer);
+                    break;
+                case "4":
                     System.out.println("Logged out successfully.");
                     loggedIn = false;
                     break;
@@ -387,9 +469,7 @@ public class ConsoleLogin {
         return null;
     }
 
-    private static Customer selectOtherCustomer(
-            Customer currentCustomer,
-            Scanner scanner) {
+    private static Customer selectOtherCustomer(Customer currentCustomer, Scanner scanner) {
 
         ArrayList<Customer> customers =
                 CustomerFileManager.getAllCustomers();
@@ -444,5 +524,95 @@ public class ConsoleLogin {
         }
     }
 
+    private static Customer selectCustomerForBanker(Scanner scanner) {
+
+        ArrayList<Customer> customers =
+                CustomerFileManager.getAllCustomers();
+
+        if (customers.isEmpty()) {
+            System.out.println("No customers found.");
+            return null;
+        }
+
+        System.out.println("\n===== Choose Customer =====");
+
+        for (int i = 0; i < customers.size(); i++) {
+
+            Customer customer = customers.get(i);
+
+            System.out.println(
+                    (i + 1) + "- " +
+                            "Name: " + customer.getName() + " " +
+                            "CPR: " + customer.getCpr() +
+                            " ID: " + customer.getId()
+            );
+        }
+
+        System.out.print("Choice: ");
+
+        try {
+
+            int choice =
+                    Integer.parseInt(scanner.nextLine().trim());
+
+            if (choice < 1 || choice > customers.size()) {
+                System.out.println("Invalid customer selection.");
+                return null;
+            }
+
+            return customers.get(choice - 1);
+
+        } catch (NumberFormatException e) {
+
+            System.out.println("Invalid choice.");
+            return null;
+        }
+    }
+
+
+    private static void showTransMenu(Customer customer, Scanner scanner) {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n===== Filter Transactions Menu =====");
+            System.out.println("1- Today");
+            System.out.println("2- Yesterday");
+            System.out.println("3- Last week");
+            System.out.println("4- Last 7 days");
+            System.out.println("5- Last month");
+            System.out.println("6- Last 30 days");
+            System.out.println("7- All Transactions ");
+            System.out.print("Choose: ");
+
+            String filter = scanner.nextLine().trim();
+
+            switch (filter) {
+                case "1":
+                    System.out.println("Today");
+                    break;
+                case "2":
+                    System.out.println("Yesterday");
+                    break;
+                case "3":
+                    System.out.println("Last week");
+                    break;
+                case "4":
+                    System.out.println("Last 7 days");
+                    break;
+                case "5":
+                    System.out.println("Last Month");
+                    break;
+                case "6":
+                    System.out.println("Last 30 days");
+                    break;
+                case "7":
+                    System.out.println("All Transactions");
+                    TransFileManager.printCustomerTransactions(customer);
+
+                    break;
+                default:
+                    System.out.println("Invalid choice, try again.");
+            }
+        }
+    }
 
 }

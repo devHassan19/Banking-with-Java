@@ -1,0 +1,10 @@
+ID:Cus-030
+CPR:9900000018
+Name:Test Customer 18
+SavingCardNumber:Card Num: 4302963638605484
+SavingCardType:Mastercard
+CheckingCardNumber:Card Num: 6551568427437212
+CheckingCardType:Platinum
+Account:Sav-Cus-030:0.0:true
+Account:Chek-Cus-030:0.0:true
+Password:6b656eafe3d315aa598dfdd1fb20a267ea77da5a4cc8e553667176fd86cb7ee5

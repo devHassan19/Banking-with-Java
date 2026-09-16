@@ -1,0 +1,10 @@
+ID:Cus-002
+CPR:963963
+Name:hasss test
+SavingCardNumber:Card Num: 4108562106234548
+SavingCardType:Platinum
+CheckingCardNumber:Card Num: 2232663865585045
+CheckingCardType:Platinum
+Account:Sav-Cus-002:0.0:true
+Account:Chek-Cus-002:0.0:true
+Password:a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
