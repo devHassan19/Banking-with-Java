@@ -1,5 +1,6 @@
 package com.ga.Banking;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
@@ -320,16 +321,6 @@ public class ConsoleLogin {
                     System.out.println("Logged out successfully.");
                     loggedIn = false;
                     break;
-                case "9":
-                    Account acc = selectAccount(customer, scanner);
-                    if (acc == null) {
-                        System.out.println("Invalid account selection.");
-                        break;
-                    }
-                    acc.changeStatus();
-                    System.out.println("Stat Updated for account selection.");
-                    CustomerFileManager.saveCustomer(customer);
-                    break;
                 default:
                     System.out.println("Invalid choice, try again.");
             }
@@ -577,37 +568,51 @@ public class ConsoleLogin {
             System.out.println("1- Today");
             System.out.println("2- Yesterday");
             System.out.println("3- Last week");
-            System.out.println("4- Last 7 days");
-            System.out.println("5- Last month");
-            System.out.println("6- Last 30 days");
-            System.out.println("7- All Transactions ");
+            System.out.println("4- Last month");
+            System.out.println("5- All Transactions");
+            System.out.println("6- Back to Menu");
             System.out.print("Choose: ");
 
             String filter = scanner.nextLine().trim();
-
+            ArrayList<Transactions> transactions =
+                    TransFileManager.readTransactions(customer);
             switch (filter) {
                 case "1":
-                    System.out.println("Today");
+                    System.out.println("Your Transactions For Today");
+                    LocalDate today = LocalDate.now();
+                    transactions.stream()
+                            .filter(t -> t.getDate().toLocalDate().equals(today))
+                            .forEach(System.out::println);
                     break;
                 case "2":
-                    System.out.println("Yesterday");
+                    System.out.println("Your Transactions For Yesterday");
+                    LocalDate yesterday = LocalDate.now().minusDays(1);
+                    transactions.stream()
+                            .filter(t -> t.getDate().toLocalDate().equals(yesterday))
+                            .forEach(System.out::println);
                     break;
                 case "3":
-                    System.out.println("Last week");
+                    System.out.println("Your Transactions For Last Week");
+                    LocalDate lastWeek = LocalDate.now().minusWeeks(1);
+                    transactions.stream()
+                            .filter(t -> t.getDate().toLocalDate().equals(lastWeek))
+                            .forEach(System.out::println);
                     break;
                 case "4":
-                    System.out.println("Last 7 days");
+                    System.out.println("Your Transactions For Last Month");
+                    LocalDate lastMounth = LocalDate.now().minusMonths(1);
+                    transactions.stream()
+                            .filter(t -> t.getDate().toLocalDate().equals(lastMounth))
+                            .forEach(System.out::println);
                     break;
                 case "5":
-                    System.out.println("Last Month");
+                    System.out.println("Your All Transactions");
+//                    TransFileManager.printCustomerTransactions(customer);
+                    transactions.stream()
+                            .forEach(System.out::println);
                     break;
                 case "6":
-                    System.out.println("Last 30 days");
-                    break;
-                case "7":
-                    System.out.println("All Transactions");
-                    TransFileManager.printCustomerTransactions(customer);
-
+                    loggedIn = false;
                     break;
                 default:
                     System.out.println("Invalid choice, try again.");

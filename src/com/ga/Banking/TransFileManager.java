@@ -5,6 +5,9 @@ import java.io.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class TransFileManager {
 
@@ -56,6 +59,71 @@ public class TransFileManager {
             System.out.println("Error!: " + e.getMessage());
         }
     }
+
+    public static ArrayList<Transactions> readTransactions(Customer customer) {
+
+        ArrayList<Transactions> transactions = new ArrayList<>();
+
+        String fileName = DIRECTORY + customer.getFileName() + "_transactions.txt";
+        File file = new File(fileName);
+
+        if (!file.exists()) {
+            return transactions;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+
+            String line;
+
+            String operation = null;
+            double amount = 0;
+            String accountId = null;
+            double balance = 0;
+            LocalDateTime date = null;
+
+            while ((line = reader.readLine()) != null) {
+
+                if (line.startsWith("Operation:")) {
+                    operation = line.substring("Operation:".length()).trim();
+
+                } else if (line.startsWith("Amount:")) {
+                    amount = Double.parseDouble(
+                            line.substring("Amount:".length()).trim()
+                    );
+
+                } else if (line.startsWith("Account:")) {
+                    accountId = line.substring("Account:".length()).trim();
+
+                } else if (line.startsWith("Balance:")) {
+                    balance = Double.parseDouble(
+                            line.substring("Balance:".length()).trim()
+                    );
+
+                } else if (line.startsWith("Date:")) {
+
+                    date = LocalDateTime.parse(
+                            line.substring("Date:".length()).trim(),
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    );
+
+                } else if (line.startsWith("----------------")) {
+
+                    Transactions transaction =
+                            new Transactions(operation, amount, accountId, balance);
+
+                    transaction.setDate(date);
+
+                    transactions.add(transaction);
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error!: " + e.getMessage());
+        }
+
+        return transactions;
+    }
+
 
     public static void removeAllTransactions() {
         File dir = new File(DIRECTORY);

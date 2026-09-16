@@ -16,3 +16,15 @@ Account:Sav-Cus-011
 Balance:2000.0
 Date:2026-09-16 14:50:23
 -------------------------
+Operation:Deposit
+Amount:200.0
+Account:Sav-Cus-011
+Balance:2200.0
+Date:2026-09-17 00:08:54
+-------------------------
+Operation:Withdraw
+Amount:20.0
+Account:Chek-Cus-011
+Balance:-55.0
+Date:2026-09-17 00:27:03
+-------------------------

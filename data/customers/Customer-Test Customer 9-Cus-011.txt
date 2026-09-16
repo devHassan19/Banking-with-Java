@@ -1,10 +1,10 @@
 ID:Cus-011
 CPR:9900000009
 Name:Test Customer 9
-SavingCardNumber:Card Num: 4375967092504011
+SavingCardNumber:Card Num: 5155308751080080
 SavingCardType:Mastercard
-CheckingCardNumber:Card Num: 4894815546184785
+CheckingCardNumber:Card Num: 1312549862053083
 CheckingCardType:Platinum
-Account:Sav-Cus-011:2000.0:true
-Account:Chek-Cus-011:0.0:true
+Account:Sav-Cus-011:2200.0:true
+Account:Chek-Cus-011:-55.0:true
 Password:7d53cf653d7df95fdeac61c590d6e23035f8fe09ae892e53ce2c9f2f5acc66cd
