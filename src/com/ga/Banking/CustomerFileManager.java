@@ -46,9 +46,9 @@ public class CustomerFileManager {
             for (Account account : customer.getAccounts()) {
                 writer.write("Account:" +
                         account.getAcountId() + ":" +
-                        account.getBalance() + "\n");
+                        account.getBalance() + ":" +
+                        account.isActive() + "\n");
             }
-            writer.write("Account Status:" + customer.getAccounts().getFirst().isActive() + "\n");
 
             writer.write("Password:" + customer.getPassword() + "\n");
 
@@ -111,7 +111,8 @@ public class CustomerFileManager {
 
                 java.util.Map<String, Double> balances =
                         new java.util.HashMap<>();
-
+                java.util.Map<String, Boolean> statuses =
+                        new java.util.HashMap<>();
 
                 while ((line = reader.readLine()) != null) {
 
@@ -166,6 +167,16 @@ public class CustomerFileManager {
                                     parts[0].trim(),
                                     Double.parseDouble(parts[1].trim())
                             );
+                        } else if (parts.length == 3) {
+
+                            balances.put(
+                                    parts[0].trim(),
+                                    Double.parseDouble(parts[1].trim())
+                            );
+                            statuses.put(
+                                    parts[0].trim(),
+                                    Boolean.parseBoolean(parts[2].trim())
+                            );
                         }
                     }
                 }
@@ -200,15 +211,15 @@ public class CustomerFileManager {
 
                         // Restore account balances
                         for (Account acc : customer.getAccounts()) {
-
-                            Double bal =
-                                    balances.get(acc.getAcountId());
-
+                            Double bal = balances.get(acc.getAcountId());
                             if (bal != null) {
                                 acc.restoreBalance(bal);
                             }
+                            Boolean status = statuses.get(acc.getAcountId());
+                            if (status != null) {
+                                acc.setActive(status);
+                            }
                         }
-
 
                         return Optional.of(customer);
                     }

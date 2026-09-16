@@ -16,3 +16,123 @@ Account:Sav-Cus-017
 Balance:-100.0
 Date:2026-09-15 10:26:16
 -------------------------
+Operation:Deposit
+Amount:200.0
+Account:Sav-Cus-017
+Balance:100.0
+Date:2026-09-16 09:43:04
+-------------------------
+Operation:Withdraw
+Amount:90.0
+Account:Chek-Cus-017
+Balance:-125.0
+Date:2026-09-16 09:43:27
+-------------------------
+Operation:Withdraw
+Amount:2.0
+Account:Sav-Cus-017
+Balance:98.0
+Date:2026-09-16 09:43:33
+-------------------------
+Operation:Withdraw
+Amount:1.0
+Account:Sav-Cus-017
+Balance:97.0
+Date:2026-09-16 09:43:50
+-------------------------
+Operation:Withdraw
+Amount:1.0
+Account:Sav-Cus-017
+Balance:96.0
+Date:2026-09-16 09:43:56
+-------------------------
+Operation:Withdraw
+Amount:1.0
+Account:Sav-Cus-017
+Balance:95.0
+Date:2026-09-16 09:44:01
+-------------------------
+Operation:Withdraw
+Amount:1.0
+Account:Sav-Cus-017
+Balance:94.0
+Date:2026-09-16 09:44:04
+-------------------------
+Operation:Withdraw
+Amount:30.0
+Account:Sav-Cus-017
+Balance:-65.0
+Date:2026-09-16 09:50:24
+-------------------------
+Operation:Withdraw
+Amount:60.0
+Account:Sav-Cus-017
+Balance:-160.0
+Date:2026-09-16 09:50:54
+-------------------------
+Operation:Withdraw
+Amount:60.0
+Account:Sav-Cus-017
+Balance:-95.0
+Date:2026-09-16 09:53:07
+-------------------------
+Operation:Withdraw
+Amount:10.0
+Account:Sav-Cus-017
+Balance:-45.0
+Date:2026-09-16 10:09:31
+-------------------------
+Operation:Withdraw
+Amount:60.0
+Account:Sav-Cus-017
+Balance:-140.0
+Date:2026-09-16 10:09:40
+-------------------------
+Operation:Deposit
+Amount:60.0
+Account:Sav-Cus-017
+Balance:-80.0
+Date:2026-09-16 10:09:57
+-------------------------
+Operation:Withdraw
+Amount:1.0
+Account:Sav-Cus-017
+Balance:-36.0
+Date:2026-09-16 10:14:20
+-------------------------
+Operation:Deposit
+Amount:10.0
+Account:Sav-Cus-017
+Balance:-26.0
+Date:2026-09-16 10:14:33
+-------------------------
+Operation:Deposit
+Amount:10.0
+Account:Sav-Cus-017
+Balance:10.0
+Date:2026-09-16 10:15:26
+-------------------------
+Operation:Deposit
+Amount:2.0
+Account:Sav-Cus-017
+Balance:12.0
+Date:2026-09-16 10:20:28
+-------------------------
+Operation:Withdraw
+Amount:10.0
+Account:Sav-Cus-017
+Balance:2.0
+Date:2026-09-16 10:20:39
+-------------------------
+Operation:Deposit
+Amount:20.0
+Account:Sav-Cus-017
+Balance:20.0
+Date:2026-09-16 10:21:08
+-------------------------
+Operation:Deposit
+Amount:20.0
+Account:Sav-Cus-017
+Balance:20.0
+Date:2026-09-16 10:21:40
+-------------------------

@@ -220,6 +220,10 @@ public class ConsoleLogin {
                 case "3": {
                     System.out.println("-- Source account --");
                     Account from = selectAccount(customer, scanner);
+                    if (!customer.hasDeactivatedAccount()){
+                        System.out.println("Source account has been deactivated.");
+                        break;
+                    }
                     if (from == null) {
                         System.out.println("Invalid account selection.");
                         break;
@@ -240,13 +244,16 @@ public class ConsoleLogin {
                 }
                 case "4":
                     Customer otherCustomer = selectOtherCustomer(customer, scanner);
-
                     if (otherCustomer == null) {
                         System.out.println("Invalid customer selection.");
                         break;
                     }
 
                     Account destination = selectAccount(otherCustomer, scanner);
+                    if (!customer.hasDeactivatedAccount()){
+                        System.out.println("Source account has been deactivated.");
+                        break;
+                    }
 
                     if (destination == null) {
                         System.out.println("Invalid account selection.");
@@ -270,6 +277,10 @@ public class ConsoleLogin {
                     Account from = selectAccount(customer, scanner);
                     if (from == null) {
                         System.out.println("Invalid account selection.");
+                        break;
+                    }
+                    if (!customer.hasDeactivatedAccount()){
+                        System.out.println("Source account has been deactivated.");
                         break;
                     }
                     System.out.println("-- Destination account --");

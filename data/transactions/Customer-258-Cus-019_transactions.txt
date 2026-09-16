@@ -88,3 +88,51 @@ Account:Chek-Cus-019
 Balance:-135.0
 Date:2026-09-15 12:09:19
 -------------------------
+Operation:DepositToAnother
+Amount:20.0
+Account:Sav-Cus-019
+Balance:-45.0
+Date:2026-09-16 09:58:50
+-------------------------
+Operation:DepositToAnother
+Amount:20.0
+Account:Sav-Cus-019
+Balance:20.0
+Date:2026-09-16 09:59:42
+-------------------------
+Operation:DepositToAnother
+Amount:1.0
+Account:Sav-Cus-019
+Balance:1.0
+Date:2026-09-16 10:57:50
+-------------------------
+Operation:DepositToAnother
+Amount:20.0
+Account:Chek-Cus-019
+Balance:20.0
+Date:2026-09-16 11:02:48
+-------------------------
+Operation:DepositToAnother
+Amount:1.0
+Account:Sav-Cus-019
+Balance:2.0
+Date:2026-09-16 11:03:58
+-------------------------
+Operation:DepositToAnother
+Amount:1.0
+Account:Sav-Cus-019
+Balance:3.0
+Date:2026-09-16 11:16:11
+-------------------------
+Operation:DepositToAnother
+Amount:1.0
+Account:Sav-Cus-019
+Balance:4.0
+Date:2026-09-16 11:28:59
+-------------------------
+Operation:DepositToAnother
+Amount:20.0
+Account:Chek-Cus-019
+Balance:40.0
+Date:2026-09-16 11:30:49
+-------------------------

@@ -10,3 +10,9 @@ Account:Sav-Cus-020
 Balance:-370.0
 Date:2026-09-15 11:26:14
 -------------------------
+Operation:Deposit
+Amount:50.0
+Account:Sav-Cus-020
+Balance:-320.0
+Date:2026-09-16 10:26:18
+-------------------------

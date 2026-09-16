@@ -106,3 +106,9 @@ Account:Sav-Cus-011
 Balance:304.0
 Date:2026-09-14 09:56:29
 -------------------------
+Operation:Deposit
+Amount:10.0
+Account:Sav-Cus-011
+Balance:314.0
+Date:2026-09-16 10:21:49
+-------------------------

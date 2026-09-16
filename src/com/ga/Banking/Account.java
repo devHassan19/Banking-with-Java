@@ -44,6 +44,10 @@ public abstract class Account {
         return balance;
     }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public int getMakeOverdraft() {
         return makeOverdraft;
     }
@@ -68,57 +72,144 @@ public abstract class Account {
         return transactions;
     }
 
+//    public boolean withdraw(double amount) {
+//        double overdraftUsed = 0;
+//        if (!isActive) {
+//            System.out.println("Your Acoount is Deactivate");
+//            return false;
+//        }
+//        if (amount <= 0) {
+//            System.out.println("Invalid amount.");
+//            return false;
+//        }
+//        double dailyLimit = 0;
+//        for (Transactions transaction : transactions) {
+//            if (transaction.getOperation().equals("Withdraw") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
+//                dailyLimit += transaction.getAmount();
+//            }
+//        }
+//        if (dailyLimit + amount > card.getWithdraw_Limit()) {
+//            System.out.println("Your Daily Limit Reached");
+//            System.out.println("You can't Withdraw more than " + card.getWithdraw_Limit() + " Per Day");
+//            System.out.println("Your Available Balance Is " + (card.getWithdraw_Limit() - dailyLimit));
+//            return false;
+//        } else {
+//
+//            if (this.balance - amount < -LIMIT_OF_OVERDRAFT) {
+//                System.out.println("Your Limit Overdraft Is 100 ,, You Enter Over than Limit");
+//                return false;
+//            }
+//
+//            boolean overdraft = this.balance - amount < 0;
+//
+//            this.balance -= amount;
+//
+//            if (overdraft) {
+//                overdraftUsed -= amount;
+//                this.balance -= FEES_OF_OVERDRAFT;
+//                overdraftFees += FEES_OF_OVERDRAFT;
+//                makeOverdraft++;
+//                System.out.println("OverDreft Fees Add to your Balance: " + FEES_OF_OVERDRAFT);
+//
+//                if (makeOverdraft >= 2) {
+//                    isActive = false;
+//                    System.out.println("Your Account is Deactivate");
+//                    System.out.println("Your Reach Limit of Overdraft 2 Times");
+//                    System.out.println("Should pay all fees to be active");
+//                }
+//            }
+//            Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
+//            transactions.add(transaction);
+//            TransFileManager.saveTransaction(owner, transaction);
+//
+//            System.out.println("Withdraw successful. New balance: " + this.balance);
+//            return true;
+//        }
+//    }
+
     public boolean withdraw(double amount) {
+
         if (!isActive) {
-            System.out.println("Your Acoount is Deactivate");
+            System.out.println("Your Account is Deactivated");
             return false;
         }
+
         if (amount <= 0) {
             System.out.println("Invalid amount.");
             return false;
         }
+
         double dailyLimit = 0;
+
         for (Transactions transaction : transactions) {
-            if (transaction.getOperation().equals("Withdraw") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
+
+            if (transaction.getOperation().equals("Withdraw")
+                    && transaction.getDate().toLocalDate()
+                    .equals(java.time.LocalDate.now())) {
+
                 dailyLimit += transaction.getAmount();
             }
         }
-        if (dailyLimit + amount > card.getWithdraw_Limit()) {
-            System.out.println("Your Daily Limit Reached");
-            System.out.println("You can't Withdraw more than " + card.getWithdraw_Limit() + " Per Day");
-            System.out.println("Your Available Balance Is " + (card.getWithdraw_Limit() - dailyLimit));
-            return false;
-        } else {
 
-            if (this.balance - amount < -LIMIT_OF_OVERDRAFT) {
-                System.out.println("Your Limit Overdraft Is 100 ,, You Enter Over than Limit");
+        if (dailyLimit + amount > card.getWithdraw_Limit()) {
+
+            System.out.println("Your Daily Limit Reached");
+            System.out.println(
+                    "You can't Withdraw more than "
+                            + card.getWithdraw_Limit()
+                            + " Per Day"
+            );
+
+            return false;
+        }
+        if (balance < 0) {
+
+            double availableOverdraft =
+                    LIMIT_OF_OVERDRAFT + balance + FEES_OF_OVERDRAFT;
+
+            if (amount > availableOverdraft) {
+
+                System.out.println(
+                        "Your Overdraft Limit Is "
+                                + LIMIT_OF_OVERDRAFT
+                );
+
                 return false;
             }
-
-            boolean overdraft = this.balance  < 0;
-
-            this.balance -= amount;
-
-            if (overdraft) {
-                this.balance -= FEES_OF_OVERDRAFT;
-                overdraftFees += FEES_OF_OVERDRAFT;
-                makeOverdraft++;
-                System.out.println("OverDreft Fees Add to your Balance: " + FEES_OF_OVERDRAFT);
-
-                if (makeOverdraft >= 2) {
-                    isActive = false;
-                    System.out.println("Your Account is Deactivate");
-                    System.out.println("Your Reach Limit of Overdraft 2 Times");
-                    System.out.println("Should pay all fees to be active");
-                }
-            }
-            Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
-            transactions.add(transaction);
-            TransFileManager.saveTransaction(owner, transaction);
-
-            System.out.println("Withdraw successful. New balance: " + this.balance);
-            return true;
         }
+        balance -= amount;
+        if (balance < 0) {
+
+            balance -= FEES_OF_OVERDRAFT;
+            overdraftFees += FEES_OF_OVERDRAFT;
+            makeOverdraft++;
+
+            System.out.println(
+                    "Overdraft Fee Added: "
+                            + FEES_OF_OVERDRAFT
+            );
+
+            if (makeOverdraft >= 2) {
+
+                isActive = false;
+
+                System.out.println(
+                        "Your Account is Deactivated"
+                );
+                System.out.println(
+                        "You Reached the Overdraft Limit 2 Times"
+                );
+                System.out.println("Your Should pay all Fees to use Other service");
+
+            }
+        }
+
+        Transactions transaction = new Transactions("Withdraw", amount, this.AcountId, balance);
+        transactions.add(transaction);
+        TransFileManager.saveTransaction(owner, transaction);
+
+        System.out.println("Withdraw successful. New balance: " + this.balance);
+        return true;
     }
 
     public boolean deposit(double amount) {
@@ -142,21 +233,15 @@ public abstract class Account {
             this.balance += amount;
 
             if (!isActive) {
-                System.out.println("Your Account is Deactivate");
 
-                if (this.balance >= overdraftFees) {
-                    this.balance -= overdraftFees;
+                if (this.balance >= 0) {
+                    isActive = true;
+                    System.out.println("Your Account is Active");
+                } else {
+                    System.out.println("Your Account Still Deactivate");
+                    System.out.println("You should pay all fees to use other services.");
                 }
-                System.out.println(overdraftFees);
-//                    if (overdraftFees >= 0) {
-//                        isActive = true;
-//                        System.out.println("Your Account is Active");
-//                    } else {
-//                        System.out.println("Your Acoount Still Deactivate");
-//                        System.out.println("Your Shuld pay all Fees to use Other service");
-//                    }
-                }
-//            }
+            }
             Transactions transaction = new Transactions("Deposit", amount, this.AcountId, balance);
             transactions.add(transaction);
             TransFileManager.saveTransaction(owner, transaction);
@@ -167,6 +252,13 @@ public abstract class Account {
     }
 
     public boolean depositToAnother(double amount) {
+        System.out.println("DEBUG Account ID: " + this.AcountId);
+        System.out.println("DEBUG isActive: " + this.isActive);
+        if (!isActive) {
+            System.out.println("Your Account Is Deactivate");
+            System.out.println("You should pay all fees to use other services.");
+            return false;
+        }
         if (amount <= 0) {
             System.out.println("Invalid amount.");
             return false;
@@ -189,12 +281,18 @@ public abstract class Account {
             transactions.add(transaction);
             TransFileManager.saveTransaction(owner, transaction);
 
-            System.out.println("Deposit successful. New balance: " + this.balance);
+            System.out.println("Deposit successful! ");
             return true;
         }
     }
 
     public boolean transferFunds(double amount, Account account) {
+
+        if (!isActive) {
+            System.out.println("Your Account Is Deactivate");
+            System.out.println("You should pay all fees to use other services.");
+            return false;
+        }
         if (account == this) {
             System.out.println("Cannot transfer to the same account.");
             return false;
@@ -234,6 +332,11 @@ public abstract class Account {
 
     public boolean transferToAnother(double amount, Account account) {
         double dailyLimit = 0;
+        if (!isActive) {
+            System.out.println("Your Account Is Deactivate");
+            System.out.println("You should pay all fees to use other services.");
+            return false;
+        }
         for (Transactions transaction : transactions) {
             if (transaction.getOperation().equals("transferToAnother") && transaction.getDate().toLocalDate().equals(java.time.LocalDate.now())) {
                 dailyLimit += transaction.getAmount();

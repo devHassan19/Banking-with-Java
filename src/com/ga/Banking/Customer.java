@@ -51,6 +51,16 @@ public class Customer extends User {
         return "Customer-" + getName() + "-" + getId();
     }
 
+    public boolean hasDeactivatedAccount() {
+        for (Account account : accounts) {
+            if (!account.isActive()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
     public void fetchAccounts() {
         for (Account account : accounts) {
             account.getAcountId();

@@ -58,3 +58,39 @@ Account:Chek-Cus-012
 Balance:296000.0
 Date:2026-09-14 14:29:13
 -------------------------
+Operation:Withdraw
+Amount:20.0
+Account:Chek-Cus-012
+Balance:295980.0
+Date:2026-09-16 09:53:32
+-------------------------
+Operation:DepositToAnother
+Amount:20.0
+Account:Chek-Cus-012
+Balance:20.0
+Date:2026-09-16 10:33:31
+-------------------------
+Operation:DepositToAnother
+Amount:10.0
+Account:Chek-Cus-012
+Balance:50.0
+Date:2026-09-16 10:41:48
+-------------------------
+Operation:DepositToAnother
+Amount:20.0
+Account:Sav-Cus-012
+Balance:20.0
+Date:2026-09-16 11:03:04
+-------------------------
+Operation:DepositToAnother
+Amount:1.0
+Account:Sav-Cus-012
+Balance:21.0
+Date:2026-09-16 11:04:11
+-------------------------
+Operation:DepositToAnother
+Amount:1.0
+Account:Chek-Cus-012
+Balance:51.0
+Date:2026-09-16 11:29:21
+-------------------------
