@@ -1,0 +1,11 @@
+## User Stories
+
+* As a user, I should be able to create a new bank account.
+
+* As a customer, I should be able to perform basic banking operations such as deposit, withdraw, and transfer money.
+
+* As a customer, I should be able to check my account balance.
+
+* As a banker, I should be able to display all customers and their accounts.
+
+* As a banker, I should be able to activate and deactivate customer accounts.

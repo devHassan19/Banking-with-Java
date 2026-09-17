@@ -99,53 +99,34 @@ public abstract class Account {
         if (dailyLimit + amount > card.getWithdraw_Limit()) {
 
             System.out.println("Your Daily Limit Reached");
-            System.out.println(
-                    "You can't Withdraw more than "
-                            + card.getWithdraw_Limit()
-                            + " Per Day"
-            );
+            System.out.println("You can't Withdraw more than " + card.getWithdraw_Limit() + " Per Day");
 
             return false;
         }
         if (balance < 0) {
 
-            double availableOverdraft =
-                    LIMIT_OF_OVERDRAFT + balance + FEES_OF_OVERDRAFT;
+            double availableOverdraft = LIMIT_OF_OVERDRAFT + balance + FEES_OF_OVERDRAFT;
 
             if (amount > availableOverdraft) {
-
-                System.out.println(
-                        "Your Overdraft Limit Is "
-                                + LIMIT_OF_OVERDRAFT
-                );
-
+                System.out.println("Your Overdraft Limit Is " + LIMIT_OF_OVERDRAFT);
                 return false;
             }
         }
         balance -= amount;
         if (balance < 0) {
-
             balance -= FEES_OF_OVERDRAFT;
             overdraftFees += FEES_OF_OVERDRAFT;
             makeOverdraft++;
 
-            System.out.println(
-                    "Overdraft Fee Added: "
-                            + FEES_OF_OVERDRAFT
-            );
+            System.out.println("Overdraft Fee Added: " + FEES_OF_OVERDRAFT);
 
             if (makeOverdraft >= 2) {
 
                 isActive = false;
 
-                System.out.println(
-                        "Your Account is Deactivated"
-                );
-                System.out.println(
-                        "You Reached the Overdraft Limit 2 Times"
-                );
+                System.out.println("Your Account is Deactivated");
+                System.out.println("You Reached the Overdraft Limit 2 Times");
                 System.out.println("Your Should pay all Fees to use Other service");
-
             }
         }
 

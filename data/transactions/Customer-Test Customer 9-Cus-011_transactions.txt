@@ -28,3 +28,33 @@ Account:Chek-Cus-011
 Balance:-55.0
 Date:2026-09-17 00:27:03
 -------------------------
+Operation:Deposit
+Amount:10.0
+Account:Chek-Cus-011
+Balance:-45.0
+Date:2026-09-17 09:05:54
+-------------------------
+Operation:Withdraw
+Amount:30.0
+Account:Chek-Cus-011
+Balance:-110.0
+Date:2026-09-17 09:06:01
+-------------------------
+Operation:Withdraw
+Amount:10.0
+Account:Chek-Cus-011
+Balance:-155.0
+Date:2026-09-17 09:06:09
+-------------------------
+Operation:Deposit
+Amount:5000.0
+Account:Chek-Cus-011
+Balance:4845.0
+Date:2026-09-17 09:07:11
+-------------------------
+Operation:transferToAnother
+Amount:40.0
+Account:Chek-Cus-011
+Balance:4805.0
+Date:2026-09-17 09:08:11
+-------------------------

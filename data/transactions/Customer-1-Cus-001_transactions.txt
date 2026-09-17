@@ -1,0 +1,6 @@
+Operation:Withdraw
+Amount:20.0
+Account:Sav-Cus-001
+Balance:-55.0
+Date:2026-09-17 16:52:43
+-------------------------

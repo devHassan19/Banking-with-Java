@@ -4,7 +4,6 @@ package com.ga.Banking;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class Transactions {
     private String operation;
     private double amount;

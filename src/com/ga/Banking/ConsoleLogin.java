@@ -191,7 +191,17 @@ public class ConsoleLogin {
                         break;
                     }
                     System.out.print("Enter amount to withdraw: ");
-                    double amount = parseAmount(scanner.nextLine().trim());
+//                    double amount = parseAmount(scanner.nextLine().trim());
+                    String input = scanner.nextLine().trim();
+
+                    //Test the test func in test file
+                    if (!isValidAmount(input)) {
+                        System.out.println("Invalid amount.");
+                        break;
+                    }
+
+                    //Test the test func in test file
+                    double amount = parseAmount(input);
 
                     if (acc.withdraw(amount)) {
                         CustomerFileManager.saveCustomer(customer);
@@ -327,11 +337,20 @@ public class ConsoleLogin {
         }
     }
 
-    private static double parseAmount(String input) {
+    public static double parseAmount(String input) {
         try {
             return Double.parseDouble(input);
         } catch (NumberFormatException e) {
             return -1;
+        }
+    }
+
+    public static boolean isValidAmount(String input) {
+        try {
+            double amount = Double.parseDouble(input);
+            return amount > 0;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
@@ -559,7 +578,6 @@ public class ConsoleLogin {
             return null;
         }
     }
-
 
     private static void showTransMenu(Customer customer, Scanner scanner) {
         boolean loggedIn = true;
