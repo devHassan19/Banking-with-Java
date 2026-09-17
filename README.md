@@ -162,12 +162,6 @@ These features would make the banking system more complete and closer to a real 
 
 ---
 
-## Additional Resources
-
-* [Java Documentation](https://docs.oracle.com/en/java/)
-
----
-
 ## GitHub Repository
 
-[Our GitHub Repository](PASTE-GITHUB-LINK-HERE)
+[Our GitHub Repository]([PASTE-GITHUB-LINK-HERE](https://github.com/devHassan19/Banking-with-Java))
